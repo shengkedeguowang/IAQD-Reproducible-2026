@@ -1,6 +1,6 @@
 # IAQD Core Analysis
 
-This package retains only the material needed to study:
+This package owns the material needed to study:
 
 - the AQD protocol and its security weaknesses;
 - the IAQD protocol improvement and its authenticated transcript;
