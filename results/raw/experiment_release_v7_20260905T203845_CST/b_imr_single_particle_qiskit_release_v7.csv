@@ -1,9 +1,0 @@
-﻿prepared_basis,prepared_bit,eve_basis,shots,passes,pass_rate,seed_simulator,circuit_operations
-Z,0,Z,8192,8192,1.0,2026090501,measure;reset;if_else;measure
-Z,0,X,8192,4092,0.49951171875,2026090501,h;measure;reset;if_else;h;measure
-Z,1,Z,8192,8192,1.0,2026090501,x;measure;reset;if_else;measure
-Z,1,X,8192,4087,0.4989013671875,2026090501,x;h;measure;reset;if_else;h;measure
-X,0,Z,8192,4102,0.500732421875,2026090501,h;measure;reset;if_else;h;measure
-X,0,X,8192,8192,1.0,2026090501,h;h;measure;reset;if_else;h;h;measure
-X,1,Z,8192,4080,0.498046875,2026090501,x;h;measure;reset;if_else;h;measure
-X,1,X,8192,8192,1.0,2026090501,x;h;h;measure;reset;if_else;h;h;measure
