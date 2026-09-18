@@ -9,11 +9,6 @@ This package retains only the material needed to study:
 - quantum, classical-communication, authentication, and round-resource
   accounting.
 
-Removed material includes duplicated source inputs, the original manuscript
-attachments and PDF, patch/review material, audit histories, change logs,
-failure logs, report snapshots, checksums that only described those artifacts,
-and duplicate LaTeX copies. The retained manuscript is
-`paper/iaqd_analysis.tex`.
 
 ## Retained layout
 
