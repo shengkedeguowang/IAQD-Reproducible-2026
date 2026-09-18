@@ -12,7 +12,6 @@ This package retains only the material needed to study:
 
 ## Retained layout
 
-- `paper/` — the single retained manuscript source for AQD/IAQD analysis.
 - `src/` — AQD and IAQD protocol, quantum-core, security, and resource code.
 - `experiments/` — fixed-parameter drivers for the retained analyses.
 - `prism/` and `tools/` — DTMC/MDP models and PRISM runner.
