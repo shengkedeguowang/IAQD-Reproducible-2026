@@ -1,0 +1,1253 @@
+﻿mode,n_blocks,ell,lambda_bits,r,layer,records,record_count,dependency
+BASIC,1,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,1,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,1,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,1,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,1,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,1,4,1,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,1,4,1,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,1,4,1,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,1,4,1,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,1,4,1,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,1,4,1,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,1,4,1,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,1,4,1,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,1,4,1,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,1,4,1,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,1,4,2,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,1,4,2,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,1,4,2,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,1,4,2,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,1,4,2,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,1,4,2,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,1,4,2,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,1,4,2,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,1,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,1,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,1,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,1,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,1,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,1,155,1,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,1,155,1,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,1,155,1,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,1,155,1,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,1,155,1,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,1,155,1,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,1,155,1,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,1,155,1,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,1,155,1,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,1,155,1,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,1,155,2,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,1,155,2,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,1,155,2,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,1,155,2,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,1,155,2,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,1,155,2,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,1,155,2,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,1,155,2,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,2,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,2,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,2,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,2,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,2,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,2,4,1,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,4,1,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,4,1,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,4,1,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,4,1,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,4,1,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,4,1,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,4,1,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,2,4,1,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,2,4,1,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,2,4,1,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,2,4,1,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,2,4,1,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,2,4,1,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,2,4,2,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,4,2,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,4,2,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,4,2,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,4,2,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,4,2,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,4,2,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,4,2,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,2,4,2,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,2,4,2,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,2,4,4,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,4,4,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,4,4,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,4,4,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,4,4,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,4,4,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,4,4,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,4,4,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,2,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,2,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,2,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,2,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,2,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,2,155,1,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,155,1,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,155,1,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,155,1,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,155,1,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,155,1,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,155,1,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,155,1,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,2,155,1,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,2,155,1,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,2,155,1,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,2,155,1,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,2,155,1,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,2,155,1,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,2,155,2,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,155,2,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,155,2,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,155,2,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,155,2,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,155,2,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,155,2,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,155,2,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,2,155,2,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,2,155,2,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,2,155,4,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,2,155,4,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,2,155,4,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,2,155,4,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,2,155,4,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,2,155,4,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,2,155,4,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,2,155,4,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,4,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,4,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,4,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,4,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,4,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,4,4,1,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,4,1,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,4,1,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,4,1,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,4,1,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,4,1,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,4,1,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,4,1,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,4,1,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,4,1,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,4,4,1,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,4,4,1,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,4,4,1,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,4,4,1,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,4,4,1,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,4,4,1,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,4,4,1,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,4,4,1,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,4,4,1,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,4,4,1,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,4,4,1,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,4,4,1,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,4,2,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,4,2,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,4,2,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,4,2,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,4,2,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,4,2,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,4,2,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,4,2,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,4,2,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,4,2,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,4,4,2,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,4,4,2,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,4,4,2,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,4,4,2,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,4,4,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,4,4,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,4,4,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,4,4,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,4,4,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,4,4,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,4,4,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,4,4,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,4,4,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,4,4,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,4,8,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,4,8,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,4,8,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,4,8,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,4,8,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,4,8,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,4,8,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,4,8,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,4,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,4,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,4,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,4,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,4,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,4,155,1,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,155,1,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,155,1,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,155,1,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,155,1,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,155,1,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,155,1,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,155,1,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,155,1,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,155,1,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,4,155,1,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,4,155,1,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,4,155,1,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,4,155,1,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,4,155,1,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,4,155,1,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,4,155,1,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,4,155,1,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,4,155,1,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,4,155,1,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,4,155,1,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,4,155,1,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,155,2,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,155,2,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,155,2,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,155,2,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,155,2,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,155,2,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,155,2,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,155,2,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,155,2,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,155,2,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,4,155,2,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,4,155,2,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,4,155,2,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,4,155,2,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,155,4,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,155,4,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,155,4,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,155,4,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,155,4,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,155,4,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,155,4,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,155,4,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,4,155,4,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,4,155,4,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,4,155,8,1,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,4,155,8,1,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,4,155,8,1,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,4,155,8,1,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,4,155,8,1,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,4,155,8,1,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,4,155,8,1,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,4,155,8,1,8,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,8,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,8,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,8,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,8,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,8,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,8,4,1,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,4,1,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,4,1,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,4,1,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,4,1,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,4,1,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,4,1,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,4,1,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,4,1,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,4,1,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,4,1,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,4,1,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,4,1,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,4,1,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,8,4,1,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,8,4,1,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,8,4,1,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,8,4,1,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,8,4,1,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,8,4,1,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,8,4,1,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,8,4,1,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,8,4,1,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,8,4,1,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,8,4,1,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,8,4,1,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,8,4,1,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,8,4,1,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,8,4,1,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,8,4,1,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,8,4,1,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,8,4,1,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,8,4,1,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,8,4,1,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,8,4,1,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,8,4,1,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,8,4,1,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,8,4,1,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,4,2,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,4,2,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,4,2,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,4,2,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,4,2,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,4,2,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,4,2,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,4,2,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,4,2,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,4,2,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,4,2,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,4,2,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,4,2,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,4,2,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,8,4,2,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,8,4,2,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,8,4,2,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,8,4,2,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,8,4,2,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,8,4,2,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,8,4,2,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,8,4,2,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,4,4,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,4,4,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,4,4,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,4,4,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,4,4,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,4,4,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,4,4,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,4,4,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,4,4,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,4,4,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,4,4,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,4,4,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,4,4,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,4,4,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,4,8,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,4,8,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,4,8,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,4,8,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,4,8,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,4,8,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,4,8,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,4,8,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,4,8,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,4,8,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,8,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,8,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,8,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,8,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,8,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,8,155,1,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,155,1,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,155,1,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,155,1,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,155,1,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,155,1,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,155,1,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,155,1,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,155,1,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,155,1,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,155,1,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,155,1,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,155,1,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,155,1,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,8,155,1,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,8,155,1,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,8,155,1,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,8,155,1,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,8,155,1,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,8,155,1,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,8,155,1,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,8,155,1,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,8,155,1,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,8,155,1,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,8,155,1,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,8,155,1,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,8,155,1,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,8,155,1,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,8,155,1,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,8,155,1,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,8,155,1,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,8,155,1,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,8,155,1,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,8,155,1,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,8,155,1,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,8,155,1,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,8,155,1,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,8,155,1,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,155,2,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,155,2,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,155,2,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,155,2,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,155,2,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,155,2,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,155,2,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,155,2,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,155,2,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,155,2,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,155,2,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,155,2,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,155,2,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,155,2,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,8,155,2,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,8,155,2,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,8,155,2,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,8,155,2,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,8,155,2,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,8,155,2,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,8,155,2,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,8,155,2,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,155,4,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,155,4,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,155,4,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,155,4,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,155,4,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,155,4,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,155,4,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,155,4,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,155,4,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,155,4,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,8,155,4,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,8,155,4,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,8,155,4,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,8,155,4,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,8,155,8,2,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,8,155,8,2,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,8,155,8,2,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,8,155,8,2,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,8,155,8,2,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,8,155,8,2,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,8,155,8,2,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,8,155,8,2,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,8,155,8,2,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,8,155,8,2,10,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,16,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,16,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,16,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,16,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,16,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,16,4,1,32,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,4,1,32,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,4,1,32,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,4,1,32,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,4,1,32,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,4,1,32,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,4,1,32,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,4,1,32,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,4,1,32,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,4,1,32,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,4,1,32,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,4,1,32,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,4,1,32,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,4,1,32,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,4,1,32,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,4,1,32,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,4,1,32,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,4,1,32,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,4,1,32,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,4,1,32,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,4,1,32,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,4,1,32,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,16,4,1,32,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,16,4,1,32,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,16,4,1,32,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,16,4,1,32,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,16,4,1,32,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,16,4,1,32,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,16,4,1,32,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,16,4,1,32,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,16,4,1,32,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,16,4,1,32,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,16,4,1,32,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,16,4,1,32,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,16,4,1,32,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,16,4,1,32,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,16,4,1,32,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,16,4,1,32,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,16,4,1,32,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,16,4,1,32,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,16,4,1,32,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,16,4,1,32,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,16,4,1,32,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,16,4,1,32,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,16,4,1,32,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,16,4,1,32,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,16,4,1,32,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,16,4,1,32,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,16,4,1,32,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,16,4,1,32,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,16,4,1,32,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,16,4,1,32,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,16,4,1,32,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,16,4,1,32,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,16,4,1,32,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,16,4,1,32,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,16,4,1,32,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,16,4,1,32,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,16,4,1,32,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,16,4,1,32,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,16,4,1,32,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,16,4,1,32,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,16,4,1,32,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,16,4,1,32,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,16,4,1,32,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,16,4,1,32,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,16,4,1,32,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,16,4,1,32,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,16,4,1,32,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,16,4,1,32,70,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,4,2,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,4,2,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,4,2,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,4,2,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,4,2,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,4,2,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,4,2,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,4,2,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,4,2,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,4,2,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,4,2,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,4,2,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,4,2,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,4,2,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,4,2,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,4,2,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,4,2,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,4,2,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,4,2,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,4,2,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,4,2,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,4,2,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,16,4,2,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,16,4,2,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,16,4,2,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,16,4,2,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,16,4,2,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,16,4,2,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,16,4,2,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,16,4,2,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,16,4,2,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,16,4,2,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,16,4,2,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,16,4,2,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,16,4,2,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,16,4,2,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,16,4,2,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,16,4,2,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,4,4,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,4,4,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,4,4,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,4,4,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,4,4,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,4,4,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,4,4,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,4,4,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,4,4,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,4,4,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,4,4,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,4,4,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,4,4,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,4,4,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,4,4,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,4,4,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,4,4,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,4,4,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,4,4,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,4,4,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,4,4,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,4,4,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,4,8,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,4,8,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,4,8,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,4,8,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,4,8,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,4,8,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,4,8,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,4,8,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,4,8,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,4,8,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,4,8,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,4,8,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,4,8,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,4,8,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,16,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,16,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,16,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,16,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,16,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,16,155,1,32,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,155,1,32,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,155,1,32,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,155,1,32,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,155,1,32,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,155,1,32,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,155,1,32,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,155,1,32,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,155,1,32,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,155,1,32,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,155,1,32,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,155,1,32,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,155,1,32,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,155,1,32,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,155,1,32,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,155,1,32,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,155,1,32,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,155,1,32,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,155,1,32,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,155,1,32,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,155,1,32,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,155,1,32,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,16,155,1,32,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,16,155,1,32,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,16,155,1,32,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,16,155,1,32,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,16,155,1,32,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,16,155,1,32,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,16,155,1,32,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,16,155,1,32,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,16,155,1,32,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,16,155,1,32,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,16,155,1,32,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,16,155,1,32,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,16,155,1,32,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,16,155,1,32,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,16,155,1,32,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,16,155,1,32,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,16,155,1,32,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,16,155,1,32,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,16,155,1,32,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,16,155,1,32,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,16,155,1,32,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,16,155,1,32,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,16,155,1,32,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,16,155,1,32,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,16,155,1,32,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,16,155,1,32,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,16,155,1,32,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,16,155,1,32,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,16,155,1,32,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,16,155,1,32,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,16,155,1,32,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,16,155,1,32,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,16,155,1,32,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,16,155,1,32,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,16,155,1,32,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,16,155,1,32,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,16,155,1,32,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,16,155,1,32,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,16,155,1,32,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,16,155,1,32,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,16,155,1,32,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,16,155,1,32,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,16,155,1,32,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,16,155,1,32,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,16,155,1,32,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,16,155,1,32,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,16,155,1,32,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,16,155,1,32,70,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,155,2,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,155,2,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,155,2,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,155,2,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,155,2,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,155,2,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,155,2,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,155,2,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,155,2,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,155,2,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,155,2,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,155,2,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,155,2,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,155,2,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,155,2,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,155,2,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,155,2,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,155,2,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,155,2,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,155,2,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,155,2,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,155,2,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,16,155,2,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,16,155,2,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,16,155,2,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,16,155,2,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,16,155,2,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,16,155,2,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,16,155,2,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,16,155,2,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,16,155,2,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,16,155,2,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,16,155,2,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,16,155,2,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,16,155,2,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,16,155,2,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,16,155,2,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,16,155,2,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,155,4,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,155,4,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,155,4,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,155,4,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,155,4,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,155,4,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,155,4,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,155,4,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,155,4,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,155,4,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,155,4,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,155,4,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,155,4,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,155,4,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,16,155,4,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,16,155,4,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,16,155,4,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,16,155,4,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,16,155,4,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,16,155,4,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,16,155,4,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,16,155,4,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,16,155,8,4,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,16,155,8,4,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,16,155,8,4,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,16,155,8,4,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,16,155,8,4,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,16,155,8,4,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,16,155,8,4,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,16,155,8,4,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,16,155,8,4,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,16,155,8,4,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,16,155,8,4,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,16,155,8,4,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,16,155,8,4,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,16,155,8,4,14,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,32,4,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,32,4,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,32,4,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,32,4,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,32,4,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,32,4,1,64,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,4,1,64,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,4,1,64,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,4,1,64,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,4,1,64,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,4,1,64,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,4,1,64,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,4,1,64,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,4,1,64,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,4,1,64,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,4,1,64,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,4,1,64,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,4,1,64,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,4,1,64,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,4,1,64,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,4,1,64,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,4,1,64,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,4,1,64,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,4,1,64,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,4,1,64,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,4,1,64,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,4,1,64,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,4,1,64,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,4,1,64,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,4,1,64,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,4,1,64,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,4,1,64,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,4,1,64,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,4,1,64,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,4,1,64,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,4,1,64,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,4,1,64,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,4,1,64,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,4,1,64,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,4,1,64,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,4,1,64,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,4,1,64,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,4,1,64,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,32,4,1,64,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,32,4,1,64,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,32,4,1,64,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,32,4,1,64,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,32,4,1,64,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,32,4,1,64,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,32,4,1,64,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,32,4,1,64,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,32,4,1,64,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,32,4,1,64,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,32,4,1,64,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,32,4,1,64,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,32,4,1,64,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,32,4,1,64,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,32,4,1,64,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,32,4,1,64,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,32,4,1,64,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,32,4,1,64,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,32,4,1,64,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,32,4,1,64,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,32,4,1,64,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,32,4,1,64,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,32,4,1,64,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,32,4,1,64,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,32,4,1,64,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,32,4,1,64,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,32,4,1,64,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,32,4,1,64,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,32,4,1,64,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,32,4,1,64,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,32,4,1,64,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,32,4,1,64,70,OPEN_leader_33,1,previous block complete and local release guard
+RELEASE,32,4,1,64,71,OPEN_follower_33,1,verified leader OPEN 33
+RELEASE,32,4,1,64,72,OPEN_leader_34,1,previous block complete and local release guard
+RELEASE,32,4,1,64,73,OPEN_follower_34,1,verified leader OPEN 34
+RELEASE,32,4,1,64,74,OPEN_leader_35,1,previous block complete and local release guard
+RELEASE,32,4,1,64,75,OPEN_follower_35,1,verified leader OPEN 35
+RELEASE,32,4,1,64,76,OPEN_leader_36,1,previous block complete and local release guard
+RELEASE,32,4,1,64,77,OPEN_follower_36,1,verified leader OPEN 36
+RELEASE,32,4,1,64,78,OPEN_leader_37,1,previous block complete and local release guard
+RELEASE,32,4,1,64,79,OPEN_follower_37,1,verified leader OPEN 37
+RELEASE,32,4,1,64,80,OPEN_leader_38,1,previous block complete and local release guard
+RELEASE,32,4,1,64,81,OPEN_follower_38,1,verified leader OPEN 38
+RELEASE,32,4,1,64,82,OPEN_leader_39,1,previous block complete and local release guard
+RELEASE,32,4,1,64,83,OPEN_follower_39,1,verified leader OPEN 39
+RELEASE,32,4,1,64,84,OPEN_leader_40,1,previous block complete and local release guard
+RELEASE,32,4,1,64,85,OPEN_follower_40,1,verified leader OPEN 40
+RELEASE,32,4,1,64,86,OPEN_leader_41,1,previous block complete and local release guard
+RELEASE,32,4,1,64,87,OPEN_follower_41,1,verified leader OPEN 41
+RELEASE,32,4,1,64,88,OPEN_leader_42,1,previous block complete and local release guard
+RELEASE,32,4,1,64,89,OPEN_follower_42,1,verified leader OPEN 42
+RELEASE,32,4,1,64,90,OPEN_leader_43,1,previous block complete and local release guard
+RELEASE,32,4,1,64,91,OPEN_follower_43,1,verified leader OPEN 43
+RELEASE,32,4,1,64,92,OPEN_leader_44,1,previous block complete and local release guard
+RELEASE,32,4,1,64,93,OPEN_follower_44,1,verified leader OPEN 44
+RELEASE,32,4,1,64,94,OPEN_leader_45,1,previous block complete and local release guard
+RELEASE,32,4,1,64,95,OPEN_follower_45,1,verified leader OPEN 45
+RELEASE,32,4,1,64,96,OPEN_leader_46,1,previous block complete and local release guard
+RELEASE,32,4,1,64,97,OPEN_follower_46,1,verified leader OPEN 46
+RELEASE,32,4,1,64,98,OPEN_leader_47,1,previous block complete and local release guard
+RELEASE,32,4,1,64,99,OPEN_follower_47,1,verified leader OPEN 47
+RELEASE,32,4,1,64,100,OPEN_leader_48,1,previous block complete and local release guard
+RELEASE,32,4,1,64,101,OPEN_follower_48,1,verified leader OPEN 48
+RELEASE,32,4,1,64,102,OPEN_leader_49,1,previous block complete and local release guard
+RELEASE,32,4,1,64,103,OPEN_follower_49,1,verified leader OPEN 49
+RELEASE,32,4,1,64,104,OPEN_leader_50,1,previous block complete and local release guard
+RELEASE,32,4,1,64,105,OPEN_follower_50,1,verified leader OPEN 50
+RELEASE,32,4,1,64,106,OPEN_leader_51,1,previous block complete and local release guard
+RELEASE,32,4,1,64,107,OPEN_follower_51,1,verified leader OPEN 51
+RELEASE,32,4,1,64,108,OPEN_leader_52,1,previous block complete and local release guard
+RELEASE,32,4,1,64,109,OPEN_follower_52,1,verified leader OPEN 52
+RELEASE,32,4,1,64,110,OPEN_leader_53,1,previous block complete and local release guard
+RELEASE,32,4,1,64,111,OPEN_follower_53,1,verified leader OPEN 53
+RELEASE,32,4,1,64,112,OPEN_leader_54,1,previous block complete and local release guard
+RELEASE,32,4,1,64,113,OPEN_follower_54,1,verified leader OPEN 54
+RELEASE,32,4,1,64,114,OPEN_leader_55,1,previous block complete and local release guard
+RELEASE,32,4,1,64,115,OPEN_follower_55,1,verified leader OPEN 55
+RELEASE,32,4,1,64,116,OPEN_leader_56,1,previous block complete and local release guard
+RELEASE,32,4,1,64,117,OPEN_follower_56,1,verified leader OPEN 56
+RELEASE,32,4,1,64,118,OPEN_leader_57,1,previous block complete and local release guard
+RELEASE,32,4,1,64,119,OPEN_follower_57,1,verified leader OPEN 57
+RELEASE,32,4,1,64,120,OPEN_leader_58,1,previous block complete and local release guard
+RELEASE,32,4,1,64,121,OPEN_follower_58,1,verified leader OPEN 58
+RELEASE,32,4,1,64,122,OPEN_leader_59,1,previous block complete and local release guard
+RELEASE,32,4,1,64,123,OPEN_follower_59,1,verified leader OPEN 59
+RELEASE,32,4,1,64,124,OPEN_leader_60,1,previous block complete and local release guard
+RELEASE,32,4,1,64,125,OPEN_follower_60,1,verified leader OPEN 60
+RELEASE,32,4,1,64,126,OPEN_leader_61,1,previous block complete and local release guard
+RELEASE,32,4,1,64,127,OPEN_follower_61,1,verified leader OPEN 61
+RELEASE,32,4,1,64,128,OPEN_leader_62,1,previous block complete and local release guard
+RELEASE,32,4,1,64,129,OPEN_follower_62,1,verified leader OPEN 62
+RELEASE,32,4,1,64,130,OPEN_leader_63,1,previous block complete and local release guard
+RELEASE,32,4,1,64,131,OPEN_follower_63,1,verified leader OPEN 63
+RELEASE,32,4,1,64,132,OPEN_leader_64,1,previous block complete and local release guard
+RELEASE,32,4,1,64,133,OPEN_follower_64,1,verified leader OPEN 64
+RELEASE,32,4,1,64,134,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,4,2,32,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,4,2,32,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,4,2,32,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,4,2,32,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,4,2,32,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,4,2,32,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,4,2,32,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,4,2,32,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,4,2,32,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,4,2,32,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,4,2,32,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,4,2,32,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,4,2,32,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,4,2,32,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,4,2,32,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,4,2,32,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,4,2,32,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,4,2,32,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,4,2,32,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,4,2,32,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,4,2,32,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,4,2,32,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,4,2,32,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,4,2,32,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,4,2,32,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,4,2,32,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,4,2,32,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,4,2,32,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,4,2,32,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,4,2,32,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,4,2,32,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,4,2,32,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,4,2,32,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,4,2,32,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,4,2,32,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,4,2,32,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,4,2,32,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,4,2,32,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,32,4,2,32,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,32,4,2,32,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,32,4,2,32,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,32,4,2,32,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,32,4,2,32,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,32,4,2,32,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,32,4,2,32,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,32,4,2,32,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,32,4,2,32,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,32,4,2,32,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,32,4,2,32,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,32,4,2,32,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,32,4,2,32,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,32,4,2,32,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,32,4,2,32,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,32,4,2,32,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,32,4,2,32,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,32,4,2,32,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,32,4,2,32,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,32,4,2,32,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,32,4,2,32,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,32,4,2,32,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,32,4,2,32,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,32,4,2,32,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,32,4,2,32,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,32,4,2,32,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,32,4,2,32,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,32,4,2,32,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,32,4,2,32,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,32,4,2,32,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,32,4,2,32,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,32,4,2,32,70,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,4,4,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,4,4,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,4,4,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,4,4,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,4,4,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,4,4,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,4,4,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,4,4,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,4,4,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,4,4,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,4,4,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,4,4,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,4,4,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,4,4,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,4,4,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,4,4,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,4,4,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,4,4,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,4,4,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,4,4,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,4,4,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,4,4,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,4,4,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,4,4,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,4,4,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,4,4,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,4,4,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,4,4,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,4,4,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,4,4,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,4,4,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,4,4,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,4,4,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,4,4,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,4,4,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,4,4,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,4,4,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,4,4,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,4,8,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,4,8,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,4,8,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,4,8,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,4,8,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,4,8,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,4,8,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,4,8,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,4,8,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,4,8,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,4,8,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,4,8,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,4,8,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,4,8,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,4,8,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,4,8,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,4,8,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,4,8,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,4,8,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,4,8,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,4,8,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,4,8,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+BASIC,32,155,,0,1,QRECV_ACK,1,quantum delivery/length check
+BASIC,32,155,,0,2,DECOY_INFO,1,verified QRECV_ACK
+BASIC,32,155,,0,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+BASIC,32,155,,0,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+BASIC,32,155,,0,5,CONFIRM_A|CONFIRM_B,2,each party local full recovery; confirmations independent
+RELEASE,32,155,1,64,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,155,1,64,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,155,1,64,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,155,1,64,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,155,1,64,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,155,1,64,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,155,1,64,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,155,1,64,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,155,1,64,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,155,1,64,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,155,1,64,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,155,1,64,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,155,1,64,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,155,1,64,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,155,1,64,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,155,1,64,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,155,1,64,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,155,1,64,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,155,1,64,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,155,1,64,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,155,1,64,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,155,1,64,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,155,1,64,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,155,1,64,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,155,1,64,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,155,1,64,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,155,1,64,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,155,1,64,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,155,1,64,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,155,1,64,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,155,1,64,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,155,1,64,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,155,1,64,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,155,1,64,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,155,1,64,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,155,1,64,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,155,1,64,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,155,1,64,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,32,155,1,64,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,32,155,1,64,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,32,155,1,64,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,32,155,1,64,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,32,155,1,64,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,32,155,1,64,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,32,155,1,64,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,32,155,1,64,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,32,155,1,64,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,32,155,1,64,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,32,155,1,64,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,32,155,1,64,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,32,155,1,64,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,32,155,1,64,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,32,155,1,64,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,32,155,1,64,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,32,155,1,64,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,32,155,1,64,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,32,155,1,64,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,32,155,1,64,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,32,155,1,64,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,32,155,1,64,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,32,155,1,64,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,32,155,1,64,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,32,155,1,64,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,32,155,1,64,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,32,155,1,64,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,32,155,1,64,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,32,155,1,64,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,32,155,1,64,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,32,155,1,64,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,32,155,1,64,70,OPEN_leader_33,1,previous block complete and local release guard
+RELEASE,32,155,1,64,71,OPEN_follower_33,1,verified leader OPEN 33
+RELEASE,32,155,1,64,72,OPEN_leader_34,1,previous block complete and local release guard
+RELEASE,32,155,1,64,73,OPEN_follower_34,1,verified leader OPEN 34
+RELEASE,32,155,1,64,74,OPEN_leader_35,1,previous block complete and local release guard
+RELEASE,32,155,1,64,75,OPEN_follower_35,1,verified leader OPEN 35
+RELEASE,32,155,1,64,76,OPEN_leader_36,1,previous block complete and local release guard
+RELEASE,32,155,1,64,77,OPEN_follower_36,1,verified leader OPEN 36
+RELEASE,32,155,1,64,78,OPEN_leader_37,1,previous block complete and local release guard
+RELEASE,32,155,1,64,79,OPEN_follower_37,1,verified leader OPEN 37
+RELEASE,32,155,1,64,80,OPEN_leader_38,1,previous block complete and local release guard
+RELEASE,32,155,1,64,81,OPEN_follower_38,1,verified leader OPEN 38
+RELEASE,32,155,1,64,82,OPEN_leader_39,1,previous block complete and local release guard
+RELEASE,32,155,1,64,83,OPEN_follower_39,1,verified leader OPEN 39
+RELEASE,32,155,1,64,84,OPEN_leader_40,1,previous block complete and local release guard
+RELEASE,32,155,1,64,85,OPEN_follower_40,1,verified leader OPEN 40
+RELEASE,32,155,1,64,86,OPEN_leader_41,1,previous block complete and local release guard
+RELEASE,32,155,1,64,87,OPEN_follower_41,1,verified leader OPEN 41
+RELEASE,32,155,1,64,88,OPEN_leader_42,1,previous block complete and local release guard
+RELEASE,32,155,1,64,89,OPEN_follower_42,1,verified leader OPEN 42
+RELEASE,32,155,1,64,90,OPEN_leader_43,1,previous block complete and local release guard
+RELEASE,32,155,1,64,91,OPEN_follower_43,1,verified leader OPEN 43
+RELEASE,32,155,1,64,92,OPEN_leader_44,1,previous block complete and local release guard
+RELEASE,32,155,1,64,93,OPEN_follower_44,1,verified leader OPEN 44
+RELEASE,32,155,1,64,94,OPEN_leader_45,1,previous block complete and local release guard
+RELEASE,32,155,1,64,95,OPEN_follower_45,1,verified leader OPEN 45
+RELEASE,32,155,1,64,96,OPEN_leader_46,1,previous block complete and local release guard
+RELEASE,32,155,1,64,97,OPEN_follower_46,1,verified leader OPEN 46
+RELEASE,32,155,1,64,98,OPEN_leader_47,1,previous block complete and local release guard
+RELEASE,32,155,1,64,99,OPEN_follower_47,1,verified leader OPEN 47
+RELEASE,32,155,1,64,100,OPEN_leader_48,1,previous block complete and local release guard
+RELEASE,32,155,1,64,101,OPEN_follower_48,1,verified leader OPEN 48
+RELEASE,32,155,1,64,102,OPEN_leader_49,1,previous block complete and local release guard
+RELEASE,32,155,1,64,103,OPEN_follower_49,1,verified leader OPEN 49
+RELEASE,32,155,1,64,104,OPEN_leader_50,1,previous block complete and local release guard
+RELEASE,32,155,1,64,105,OPEN_follower_50,1,verified leader OPEN 50
+RELEASE,32,155,1,64,106,OPEN_leader_51,1,previous block complete and local release guard
+RELEASE,32,155,1,64,107,OPEN_follower_51,1,verified leader OPEN 51
+RELEASE,32,155,1,64,108,OPEN_leader_52,1,previous block complete and local release guard
+RELEASE,32,155,1,64,109,OPEN_follower_52,1,verified leader OPEN 52
+RELEASE,32,155,1,64,110,OPEN_leader_53,1,previous block complete and local release guard
+RELEASE,32,155,1,64,111,OPEN_follower_53,1,verified leader OPEN 53
+RELEASE,32,155,1,64,112,OPEN_leader_54,1,previous block complete and local release guard
+RELEASE,32,155,1,64,113,OPEN_follower_54,1,verified leader OPEN 54
+RELEASE,32,155,1,64,114,OPEN_leader_55,1,previous block complete and local release guard
+RELEASE,32,155,1,64,115,OPEN_follower_55,1,verified leader OPEN 55
+RELEASE,32,155,1,64,116,OPEN_leader_56,1,previous block complete and local release guard
+RELEASE,32,155,1,64,117,OPEN_follower_56,1,verified leader OPEN 56
+RELEASE,32,155,1,64,118,OPEN_leader_57,1,previous block complete and local release guard
+RELEASE,32,155,1,64,119,OPEN_follower_57,1,verified leader OPEN 57
+RELEASE,32,155,1,64,120,OPEN_leader_58,1,previous block complete and local release guard
+RELEASE,32,155,1,64,121,OPEN_follower_58,1,verified leader OPEN 58
+RELEASE,32,155,1,64,122,OPEN_leader_59,1,previous block complete and local release guard
+RELEASE,32,155,1,64,123,OPEN_follower_59,1,verified leader OPEN 59
+RELEASE,32,155,1,64,124,OPEN_leader_60,1,previous block complete and local release guard
+RELEASE,32,155,1,64,125,OPEN_follower_60,1,verified leader OPEN 60
+RELEASE,32,155,1,64,126,OPEN_leader_61,1,previous block complete and local release guard
+RELEASE,32,155,1,64,127,OPEN_follower_61,1,verified leader OPEN 61
+RELEASE,32,155,1,64,128,OPEN_leader_62,1,previous block complete and local release guard
+RELEASE,32,155,1,64,129,OPEN_follower_62,1,verified leader OPEN 62
+RELEASE,32,155,1,64,130,OPEN_leader_63,1,previous block complete and local release guard
+RELEASE,32,155,1,64,131,OPEN_follower_63,1,verified leader OPEN 63
+RELEASE,32,155,1,64,132,OPEN_leader_64,1,previous block complete and local release guard
+RELEASE,32,155,1,64,133,OPEN_follower_64,1,verified leader OPEN 64
+RELEASE,32,155,1,64,134,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,155,2,32,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,155,2,32,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,155,2,32,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,155,2,32,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,155,2,32,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,155,2,32,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,155,2,32,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,155,2,32,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,155,2,32,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,155,2,32,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,155,2,32,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,155,2,32,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,155,2,32,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,155,2,32,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,155,2,32,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,155,2,32,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,155,2,32,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,155,2,32,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,155,2,32,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,155,2,32,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,155,2,32,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,155,2,32,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,155,2,32,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,155,2,32,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,155,2,32,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,155,2,32,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,155,2,32,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,155,2,32,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,155,2,32,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,155,2,32,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,155,2,32,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,155,2,32,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,155,2,32,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,155,2,32,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,155,2,32,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,155,2,32,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,155,2,32,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,155,2,32,38,OPEN_leader_17,1,previous block complete and local release guard
+RELEASE,32,155,2,32,39,OPEN_follower_17,1,verified leader OPEN 17
+RELEASE,32,155,2,32,40,OPEN_leader_18,1,previous block complete and local release guard
+RELEASE,32,155,2,32,41,OPEN_follower_18,1,verified leader OPEN 18
+RELEASE,32,155,2,32,42,OPEN_leader_19,1,previous block complete and local release guard
+RELEASE,32,155,2,32,43,OPEN_follower_19,1,verified leader OPEN 19
+RELEASE,32,155,2,32,44,OPEN_leader_20,1,previous block complete and local release guard
+RELEASE,32,155,2,32,45,OPEN_follower_20,1,verified leader OPEN 20
+RELEASE,32,155,2,32,46,OPEN_leader_21,1,previous block complete and local release guard
+RELEASE,32,155,2,32,47,OPEN_follower_21,1,verified leader OPEN 21
+RELEASE,32,155,2,32,48,OPEN_leader_22,1,previous block complete and local release guard
+RELEASE,32,155,2,32,49,OPEN_follower_22,1,verified leader OPEN 22
+RELEASE,32,155,2,32,50,OPEN_leader_23,1,previous block complete and local release guard
+RELEASE,32,155,2,32,51,OPEN_follower_23,1,verified leader OPEN 23
+RELEASE,32,155,2,32,52,OPEN_leader_24,1,previous block complete and local release guard
+RELEASE,32,155,2,32,53,OPEN_follower_24,1,verified leader OPEN 24
+RELEASE,32,155,2,32,54,OPEN_leader_25,1,previous block complete and local release guard
+RELEASE,32,155,2,32,55,OPEN_follower_25,1,verified leader OPEN 25
+RELEASE,32,155,2,32,56,OPEN_leader_26,1,previous block complete and local release guard
+RELEASE,32,155,2,32,57,OPEN_follower_26,1,verified leader OPEN 26
+RELEASE,32,155,2,32,58,OPEN_leader_27,1,previous block complete and local release guard
+RELEASE,32,155,2,32,59,OPEN_follower_27,1,verified leader OPEN 27
+RELEASE,32,155,2,32,60,OPEN_leader_28,1,previous block complete and local release guard
+RELEASE,32,155,2,32,61,OPEN_follower_28,1,verified leader OPEN 28
+RELEASE,32,155,2,32,62,OPEN_leader_29,1,previous block complete and local release guard
+RELEASE,32,155,2,32,63,OPEN_follower_29,1,verified leader OPEN 29
+RELEASE,32,155,2,32,64,OPEN_leader_30,1,previous block complete and local release guard
+RELEASE,32,155,2,32,65,OPEN_follower_30,1,verified leader OPEN 30
+RELEASE,32,155,2,32,66,OPEN_leader_31,1,previous block complete and local release guard
+RELEASE,32,155,2,32,67,OPEN_follower_31,1,verified leader OPEN 31
+RELEASE,32,155,2,32,68,OPEN_leader_32,1,previous block complete and local release guard
+RELEASE,32,155,2,32,69,OPEN_follower_32,1,verified leader OPEN 32
+RELEASE,32,155,2,32,70,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,155,4,16,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,155,4,16,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,155,4,16,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,155,4,16,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,155,4,16,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,155,4,16,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,155,4,16,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,155,4,16,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,155,4,16,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,155,4,16,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,155,4,16,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,155,4,16,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,155,4,16,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,155,4,16,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,155,4,16,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,155,4,16,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,155,4,16,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,155,4,16,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,155,4,16,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,155,4,16,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,155,4,16,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,155,4,16,22,OPEN_leader_9,1,previous block complete and local release guard
+RELEASE,32,155,4,16,23,OPEN_follower_9,1,verified leader OPEN 9
+RELEASE,32,155,4,16,24,OPEN_leader_10,1,previous block complete and local release guard
+RELEASE,32,155,4,16,25,OPEN_follower_10,1,verified leader OPEN 10
+RELEASE,32,155,4,16,26,OPEN_leader_11,1,previous block complete and local release guard
+RELEASE,32,155,4,16,27,OPEN_follower_11,1,verified leader OPEN 11
+RELEASE,32,155,4,16,28,OPEN_leader_12,1,previous block complete and local release guard
+RELEASE,32,155,4,16,29,OPEN_follower_12,1,verified leader OPEN 12
+RELEASE,32,155,4,16,30,OPEN_leader_13,1,previous block complete and local release guard
+RELEASE,32,155,4,16,31,OPEN_follower_13,1,verified leader OPEN 13
+RELEASE,32,155,4,16,32,OPEN_leader_14,1,previous block complete and local release guard
+RELEASE,32,155,4,16,33,OPEN_follower_14,1,verified leader OPEN 14
+RELEASE,32,155,4,16,34,OPEN_leader_15,1,previous block complete and local release guard
+RELEASE,32,155,4,16,35,OPEN_follower_15,1,verified leader OPEN 15
+RELEASE,32,155,4,16,36,OPEN_leader_16,1,previous block complete and local release guard
+RELEASE,32,155,4,16,37,OPEN_follower_16,1,verified leader OPEN 16
+RELEASE,32,155,4,16,38,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery
+RELEASE,32,155,8,8,1,QRECV_ACK,1,quantum delivery/length check
+RELEASE,32,155,8,8,2,DECOY_INFO,1,verified QRECV_ACK
+RELEASE,32,155,8,8,3,DIALOGUE_B_QPASS,1,Bob local detection pass
+RELEASE,32,155,8,8,4,DIALOGUE_A,1,Alice verified DIALOGUE_B_QPASS
+RELEASE,32,155,8,8,5,COMMIT_SET_A|COMMIT_SET_B,2,both dialogue records available; commitments independent
+RELEASE,32,155,8,8,6,OPEN_leader_1,1,previous block complete and local release guard
+RELEASE,32,155,8,8,7,OPEN_follower_1,1,verified leader OPEN 1
+RELEASE,32,155,8,8,8,OPEN_leader_2,1,previous block complete and local release guard
+RELEASE,32,155,8,8,9,OPEN_follower_2,1,verified leader OPEN 2
+RELEASE,32,155,8,8,10,OPEN_leader_3,1,previous block complete and local release guard
+RELEASE,32,155,8,8,11,OPEN_follower_3,1,verified leader OPEN 3
+RELEASE,32,155,8,8,12,OPEN_leader_4,1,previous block complete and local release guard
+RELEASE,32,155,8,8,13,OPEN_follower_4,1,verified leader OPEN 4
+RELEASE,32,155,8,8,14,OPEN_leader_5,1,previous block complete and local release guard
+RELEASE,32,155,8,8,15,OPEN_follower_5,1,verified leader OPEN 5
+RELEASE,32,155,8,8,16,OPEN_leader_6,1,previous block complete and local release guard
+RELEASE,32,155,8,8,17,OPEN_follower_6,1,verified leader OPEN 6
+RELEASE,32,155,8,8,18,OPEN_leader_7,1,previous block complete and local release guard
+RELEASE,32,155,8,8,19,OPEN_follower_7,1,verified leader OPEN 7
+RELEASE,32,155,8,8,20,OPEN_leader_8,1,previous block complete and local release guard
+RELEASE,32,155,8,8,21,OPEN_follower_8,1,verified leader OPEN 8
+RELEASE,32,155,8,8,22,CONFIRM_A|CONFIRM_B,2,each party S=V=2n and local full recovery

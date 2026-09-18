@@ -1,0 +1,359 @@
+mdp
+
+// IAQD-MODEL-V7: finite control/data abstraction of IAQD-EXEC-V7 RELEASE.
+// M is the per-party message/release-mask length m=2n in bits.
+// HONEST: 0=Alice, 1=Bob. FIRST: 0=Alice, 1=Bob.
+// VARIANT: 0=reviewed protocol; 1=remove only the numeric send guard while
+// preserving the reviewed turn rule; 2=negative monitor test that additionally
+// permits an implementation-bug burst send which violates both restrictions.
+const int M;
+const int LAMBDA;
+const int HONEST;
+const int FIRST;
+const int VARIANT;
+
+formula valid_params = M>=2 & mod(M,2)=0 & LAMBDA>=1 & LAMBDA<=M
+                       & (HONEST=0 | HONEST=1) & (FIRST=0 | FIRST=1)
+                       & VARIANT>=0 & VARIANT<=2;
+formula chunks = floor((M+LAMBDA-1)/LAMBDA);
+
+// Direction codes: 0=none/local, 1=A2B, 2=B2A.
+formula honest_direction = (HONEST=0 ? 1 : 2);
+formula peer_direction = (HONEST=0 ? 2 : 1);
+
+// Strict block numbering makes both accepted and sent distinct-block sets
+// prefixes. Counts therefore represent the exact prefix cardinalities rather
+// than hiding duplicates in an unbounded set or a bit-count approximation.
+formula next_send_u = (sent_blocks_h<chunks-1 ? LAMBDA : M-(chunks-1)*LAMBDA);
+formula next_peer_u = (verified_blocks_peer<chunks-1 ? LAMBDA : M-(chunks-1)*LAMBDA);
+formula next_send_is_leader = mod(FIRST+sent_blocks_h,2)=HONEST;
+formula honest_turn_ready =
+    (next_send_is_leader & verified_blocks_peer>=sent_blocks_h) |
+    (!next_send_is_leader & verified_blocks_peer>=sent_blocks_h+1);
+formula numeric_guard = sent_honest+next_send_u<=verified_peer+LAMBDA;
+formula honest_open_enabled = phase=7 & outcome=0 & sent_blocks_h<chunks
+                              & honest_turn_ready
+                              & (VARIANT=0 ? numeric_guard : true);
+formula peer_open_needed = phase=7 & outcome=0 & verified_blocks_peer<chunks
+                           & !honest_open_enabled;
+formula new_gap_after_send = sent_honest+next_send_u-verified_peer;
+
+// A corrupt participant chooses whether to produce a record that passes all
+// idealised format/context/authentication/commitment checks. This model does
+// not assign a probability to forging MACs, PRFs or commitments.
+formula peer_record_expected = outcome=0 &
+    ((phase=1 & HONEST=0) | (phase=2 & HONEST=1) |
+     (phase=4 & HONEST=0) | (phase=5 & HONEST=1));
+formula peer_expected_type =
+    (phase=1 ? 2 : (phase=2 ? 3 : (phase=4 ? 4 : 5)));
+formula peer_expected_seq = (phase=1 | phase=2 ? 0 : 1);
+
+module iaqd_release
+    // phase: 0=quantum,1=QRECV_ACK,2=DECOY_INFO,3=Bob detection,
+    // 4=DIALOGUE_B_QPASS,5=DIALOGUE_A,6=COMMIT_SET,
+    // 7=OPEN,8=CONFIRM,9=terminal.
+    phase : [0..9] init 0;
+    // outcome: 0=active,1=completed,2=local reject,3=local timeout/abort.
+    outcome : [0..3] init 0;
+    waiting : bool init false;
+
+    // The honest instance's exact next sequence values for its own direction
+    // and the peer direction. M+4 accommodates chunks<=M and final r+3 plus update.
+    next_send_seq_h : [0..M+4] init 0;
+    next_recv_seq_h : [0..M+4] init 0;
+
+    honest_commit_sent : bool init false;
+    peer_commit_verified : bool init false;
+    sent_blocks_h : [0..chunks] init 0;
+    verified_blocks_peer : [0..chunks] init 0;
+    sent_honest : [0..M] init 0;
+    verified_peer : [0..M] init 0;
+    max_gap : [0..M] init 0;
+
+    // Corrupt-side private verification is recorded only to demonstrate that
+    // honest sending never reads it. It is absent from all honest guards.
+    adversary_verified_honest : [0..M] init 0;
+    adversary_skipped_verification : bool init false;
+
+    honest_confirm_sent : bool init false;
+    peer_confirm_verified : bool init false;
+
+    // Audit fields for the last transition.
+    // type: 0=none/local,1=quantum,2=ACK,3=DECOY,4=DIALOGUE_B,
+    // 5=DIALOGUE_A,6=COMMIT_SET,7=OPEN,8=CONFIRM.
+    last_actor : [0..2] init 0;       // 1=Alice,2=Bob
+    last_direction : [0..2] init 0;
+    last_type : [0..8] init 0;
+    last_seq : [0..M+4] init 0;
+    last_block : [0..chunks+1] init 0;
+    // event: 1=honest send,2=peer record accepted,3=invalid rejected,
+    // 4=replay rejected,5=out-of-order rejected,6=delay/wait,
+    // 7=local timeout,8=detection reject,9=begin open,
+    // 10=honest OPEN/peer verifies,11=honest OPEN/peer skips verify,
+    // 12=complete,13=bug burst send,14=honest retransmit,
+    // 15=wrong-context rejected.
+    last_event : [0..15] init 0;
+    reject_reason : [0..6] init 0;
+
+    // --- Shared pre-release prefix, from local KE acceptance onward. ---
+    [h_quantum_send] valid_params & outcome=0 & phase=0 & HONEST=0 ->
+        (phase'=1) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=1) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=1);
+    [adv_quantum_valid] valid_params & outcome=0 & phase=0 & HONEST=1 ->
+        (phase'=1) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=1) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=2);
+    [adv_quantum_bad_length] valid_params & outcome=0 & phase=0 & HONEST=1 ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=1) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=1) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=3);
+
+    [h_qrecv_ack_send] valid_params & outcome=0 & phase=1 & HONEST=1 & next_send_seq_h=0 ->
+        (phase'=2) & (next_send_seq_h'=1) & (waiting'=false) &
+        (last_actor'=2) & (last_direction'=2) & (last_type'=2) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=1);
+    [adv_qrecv_ack_valid] valid_params & outcome=0 & phase=1 & HONEST=0 & next_recv_seq_h=0 ->
+        (phase'=2) & (next_recv_seq_h'=1) & (waiting'=false) &
+        (last_actor'=2) & (last_direction'=2) & (last_type'=2) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=2);
+
+    [h_decoy_send] valid_params & outcome=0 & phase=2 & HONEST=0 & next_send_seq_h=0 ->
+        (phase'=3) & (next_send_seq_h'=1) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=3) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=1);
+    [adv_decoy_valid] valid_params & outcome=0 & phase=2 & HONEST=1 & next_recv_seq_h=0 ->
+        (phase'=3) & (next_recv_seq_h'=1) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=3) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=2);
+
+    [h_detection_pass] valid_params & outcome=0 & phase=3 & HONEST=1 ->
+        (phase'=4) & (waiting'=false) & (last_actor'=2) &
+        (last_direction'=0) & (last_type'=0) & (last_seq'=0) &
+        (last_block'=0) & (last_event'=2);
+    [h_detection_fail] valid_params & outcome=0 & phase=3 & HONEST=1 ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=6) &
+        (last_actor'=2) & (last_direction'=0) & (last_type'=0) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=8);
+    [adv_detection_claim_pass] valid_params & outcome=0 & phase=3 & HONEST=0 ->
+        (phase'=4) & (waiting'=false) & (last_actor'=2) &
+        (last_direction'=0) & (last_type'=0) & (last_seq'=0) &
+        (last_block'=0) & (last_event'=2);
+
+    [h_dialogue_b_send] valid_params & outcome=0 & phase=4 & HONEST=1 & next_send_seq_h=1 ->
+        (phase'=5) & (next_send_seq_h'=2) & (waiting'=false) &
+        (last_actor'=2) & (last_direction'=2) & (last_type'=4) &
+        (last_seq'=1) & (last_block'=0) & (last_event'=1);
+    [adv_dialogue_b_valid] valid_params & outcome=0 & phase=4 & HONEST=0 & next_recv_seq_h=1 ->
+        (phase'=5) & (next_recv_seq_h'=2) & (waiting'=false) &
+        (last_actor'=2) & (last_direction'=2) & (last_type'=4) &
+        (last_seq'=1) & (last_block'=0) & (last_event'=2);
+
+    [h_dialogue_a_send] valid_params & outcome=0 & phase=5 & HONEST=0 & next_send_seq_h=1 ->
+        (phase'=6) & (next_send_seq_h'=2) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=5) &
+        (last_seq'=1) & (last_block'=0) & (last_event'=1);
+    [adv_dialogue_a_valid] valid_params & outcome=0 & phase=5 & HONEST=1 & next_recv_seq_h=1 ->
+        (phase'=6) & (next_recv_seq_h'=2) & (waiting'=false) &
+        (last_actor'=1) & (last_direction'=1) & (last_type'=5) &
+        (last_seq'=1) & (last_block'=0) & (last_event'=2);
+
+    // A corrupt expected sender may instead deliver a record which fails one
+    // idealised check. No probability is attached to this abstraction.
+    [adv_invalid_record] valid_params & peer_record_expected ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=1) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=peer_expected_type) & (last_seq'=peer_expected_seq) &
+        (last_block'=0) & (last_event'=3);
+    [adv_wrong_sequence] valid_params & peer_record_expected ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=2) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=peer_expected_type) & (last_seq'=peer_expected_seq+1) &
+        (last_block'=0) & (last_event'=5);
+    [adv_replay_record] valid_params & peer_record_expected ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=3) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=peer_expected_type) & (last_seq'=(peer_expected_seq>0 ? peer_expected_seq-1 : 0)) &
+        (last_block'=0) & (last_event'=4);
+    [adv_wrong_context] valid_params & peer_record_expected ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=4) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=honest_direction) &
+        (last_type'=peer_expected_type) & (last_seq'=peer_expected_seq) &
+        (last_block'=0) & (last_event'=15);
+
+    // --- Independent COMMIT_SET sends/acceptance. ---
+    [h_commit_adv_verify] valid_params & outcome=0 & phase=6 & !honest_commit_sent & next_send_seq_h=2 ->
+        (honest_commit_sent'=true) & (next_send_seq_h'=3) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=honest_direction) &
+        (last_type'=6) & (last_seq'=2) & (last_block'=0) & (last_event'=1);
+    [h_commit_adv_skip] valid_params & outcome=0 & phase=6 & !honest_commit_sent & next_send_seq_h=2 ->
+        (honest_commit_sent'=true) & (next_send_seq_h'=3) &
+        (adversary_skipped_verification'=true) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=honest_direction) &
+        (last_type'=6) & (last_seq'=2) & (last_block'=0) & (last_event'=1);
+    [adv_commit_valid] valid_params & outcome=0 & phase=6 & !peer_commit_verified & next_recv_seq_h=2 ->
+        (peer_commit_verified'=true) & (next_recv_seq_h'=3) & (waiting'=false) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=6) & (last_seq'=2) & (last_block'=0) & (last_event'=2);
+    [adv_commit_invalid] valid_params & outcome=0 & phase=6 & !peer_commit_verified ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=5) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=6) & (last_seq'=2) & (last_block'=0) & (last_event'=3);
+    [adv_commit_wrong_sequence] valid_params & outcome=0 & phase=6 & !peer_commit_verified ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=2) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=6) & (last_seq'=3) & (last_block'=0) & (last_event'=5);
+    [begin_open] valid_params & outcome=0 & phase=6 & honest_commit_sent & peer_commit_verified ->
+        (phase'=7) & (waiting'=false) & (last_actor'=0) &
+        (last_direction'=0) & (last_type'=0) & (last_seq'=0) &
+        (last_block'=0) & (last_event'=9);
+
+    // --- OPEN records. Honest send and honest receive are distinct events. ---
+    [h_open_adv_verify] valid_params & honest_open_enabled ->
+        (sent_blocks_h'=sent_blocks_h+1) &
+        (sent_honest'=sent_honest+next_send_u) &
+        (adversary_verified_honest'=adversary_verified_honest+next_send_u) &
+        (max_gap'=(new_gap_after_send>max_gap ? new_gap_after_send : max_gap)) &
+        (next_send_seq_h'=next_send_seq_h+1) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=honest_direction) &
+        (last_type'=7) & (last_seq'=next_send_seq_h) &
+        (last_block'=sent_blocks_h+1) & (last_event'=10);
+    [h_open_adv_skip] valid_params & honest_open_enabled ->
+        (sent_blocks_h'=sent_blocks_h+1) &
+        (sent_honest'=sent_honest+next_send_u) &
+        (adversary_skipped_verification'=true) &
+        (max_gap'=(new_gap_after_send>max_gap ? new_gap_after_send : max_gap)) &
+        (next_send_seq_h'=next_send_seq_h+1) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=honest_direction) &
+        (last_type'=7) & (last_seq'=next_send_seq_h) &
+        (last_block'=sent_blocks_h+1) & (last_event'=11);
+
+    // A wire retransmission of the latest honest block is visible but does not
+    // change the distinct-block count, S_H or the next sequence number.
+    [h_open_retransmit] valid_params & outcome=0 & phase=7 & sent_blocks_h>0 ->
+        (waiting'=false) & (last_actor'=HONEST+1) &
+        (last_direction'=honest_direction) & (last_type'=7) &
+        (last_seq'=next_send_seq_h-1) & (last_block'=sent_blocks_h) &
+        (last_event'=14);
+
+    // The corrupt party is not forced to follow the macro-turn rule. It may
+    // deliver every next distinct valid block early; this can only increase V_H.
+    [adv_open_valid] valid_params & outcome=0 & phase=7 & verified_blocks_peer<chunks ->
+        (verified_blocks_peer'=verified_blocks_peer+1) &
+        (verified_peer'=verified_peer+next_peer_u) &
+        (next_recv_seq_h'=next_recv_seq_h+1) & (waiting'=false) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=7) & (last_seq'=next_recv_seq_h) &
+        (last_block'=verified_blocks_peer+1) & (last_event'=2);
+    [adv_open_invalid] valid_params & outcome=0 & phase=7 & verified_blocks_peer<chunks ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=5) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=7) & (last_seq'=next_recv_seq_h) &
+        (last_block'=verified_blocks_peer+1) & (last_event'=3);
+    [adv_open_out_of_order] valid_params & outcome=0 & phase=7 & verified_blocks_peer<chunks ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=2) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=7) & (last_seq'=next_recv_seq_h+1) &
+        (last_block'=verified_blocks_peer+2) & (last_event'=5);
+    [adv_open_wrong_context] valid_params & outcome=0 & phase=7 & verified_blocks_peer<chunks ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=4) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=honest_direction) &
+        (last_type'=7) & (last_seq'=next_recv_seq_h) &
+        (last_block'=verified_blocks_peer+1) & (last_event'=15);
+    [adv_open_replay] valid_params & outcome=0 & phase=7 & verified_blocks_peer>0 ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=3) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=7) & (last_seq'=next_recv_seq_h-1) &
+        (last_block'=verified_blocks_peer) & (last_event'=4);
+
+    // Variant 2 is deliberately not the protocol: it permits a new distinct
+    // honest OPEN even when both the macro-turn rule and numeric guard forbid it.
+    // The update still uses the real next block length and does not saturate S_H.
+    [bug_burst_open] valid_params & VARIANT=2 & outcome=0 & phase=7 & sent_blocks_h<chunks
+                     & sent_honest+next_send_u>verified_peer+LAMBDA ->
+        (sent_blocks_h'=sent_blocks_h+1) &
+        (sent_honest'=sent_honest+next_send_u) &
+        (max_gap'=(new_gap_after_send>max_gap ? new_gap_after_send : max_gap)) &
+        (next_send_seq_h'=next_send_seq_h+1) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=honest_direction) &
+        (last_type'=7) & (last_seq'=next_send_seq_h) &
+        (last_block'=sent_blocks_h+1) & (last_event'=13);
+
+    [open_complete] valid_params & outcome=0 & phase=7 & sent_blocks_h=chunks & verified_blocks_peer=chunks ->
+        (phase'=8) & (waiting'=false) & (last_actor'=0) &
+        (last_direction'=0) & (last_type'=0) & (last_seq'=0) &
+        (last_block'=0) & (last_event'=2);
+
+    // --- I8: independent local send and peer verification, each once. ---
+    [h_confirm_send] valid_params & outcome=0 & phase=8 & !honest_confirm_sent
+                     & sent_honest=M & verified_peer=M & next_send_seq_h=chunks+3 ->
+        (honest_confirm_sent'=true) & (next_send_seq_h'=next_send_seq_h+1) &
+        (waiting'=false) & (last_actor'=HONEST+1) &
+        (last_direction'=honest_direction) & (last_type'=8) &
+        (last_seq'=chunks+3) & (last_block'=0) & (last_event'=1);
+    [adv_confirm_valid] valid_params & outcome=0 & phase=8 & !peer_confirm_verified
+                        & sent_honest=M & verified_peer=M & next_recv_seq_h=chunks+3 ->
+        (peer_confirm_verified'=true) & (next_recv_seq_h'=next_recv_seq_h+1) &
+        (waiting'=false) & (last_actor'=(HONEST=0 ? 2 : 1)) &
+        (last_direction'=peer_direction) & (last_type'=8) &
+        (last_seq'=chunks+3) & (last_block'=0) & (last_event'=2);
+    [adv_confirm_invalid] valid_params & outcome=0 & phase=8 & !peer_confirm_verified ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=1) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=8) & (last_seq'=chunks+3) & (last_block'=0) & (last_event'=3);
+    [adv_confirm_replay] valid_params & outcome=0 & phase=8 & !peer_confirm_verified ->
+        (phase'=9) & (outcome'=2) & (waiting'=false) & (reject_reason'=3) &
+        (last_actor'=(HONEST=0 ? 2 : 1)) & (last_direction'=peer_direction) &
+        (last_type'=8) & (last_seq'=chunks+2) & (last_block'=0) & (last_event'=4);
+    [complete] valid_params & outcome=0 & phase=8 & honest_confirm_sent & peer_confirm_verified ->
+        (phase'=9) & (outcome'=1) & (waiting'=false) &
+        (last_actor'=0) & (last_direction'=0) & (last_type'=0) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=12);
+
+    // Delay is enabled only where the honest local instance has no mandatory
+    // next send and is actually awaiting a corrupt-controlled delivery/action.
+    [adv_delay_quantum] valid_params & outcome=0 & phase=0 & HONEST=1 ->
+        (waiting'=true) & (last_actor'=1) & (last_direction'=1) &
+        (last_type'=1) & (last_seq'=0) & (last_block'=0) & (last_event'=6);
+    [adv_delay_record] valid_params & peer_record_expected ->
+        (waiting'=true) & (last_actor'=(HONEST=0 ? 2 : 1)) &
+        (last_direction'=peer_direction) & (last_type'=peer_expected_type) &
+        (last_seq'=peer_expected_seq) & (last_block'=0) & (last_event'=6);
+    [adv_delay_detection] valid_params & outcome=0 & phase=3 & HONEST=0 ->
+        (waiting'=true) & (last_actor'=2) & (last_direction'=0) &
+        (last_type'=0) & (last_seq'=0) & (last_block'=0) & (last_event'=6);
+    [adv_delay_commit] valid_params & outcome=0 & phase=6 & honest_commit_sent & !peer_commit_verified ->
+        (waiting'=true) & (last_actor'=(HONEST=0 ? 2 : 1)) &
+        (last_direction'=peer_direction) & (last_type'=6) &
+        (last_seq'=2) & (last_block'=0) & (last_event'=6);
+    [adv_delay_open] valid_params & peer_open_needed ->
+        (waiting'=true) & (last_actor'=(HONEST=0 ? 2 : 1)) &
+        (last_direction'=peer_direction) & (last_type'=7) &
+        (last_seq'=next_recv_seq_h) & (last_block'=verified_blocks_peer+1) &
+        (last_event'=6);
+    [adv_delay_confirm] valid_params & outcome=0 & phase=8 & honest_confirm_sent & !peer_confirm_verified ->
+        (waiting'=true) & (last_actor'=(HONEST=0 ? 2 : 1)) &
+        (last_direction'=peer_direction) & (last_type'=8) &
+        (last_seq'=chunks+3) & (last_block'=0) & (last_event'=6);
+    [local_timeout] valid_params & outcome=0 & waiting ->
+        (phase'=9) & (outcome'=3) & (waiting'=false) &
+        (last_actor'=HONEST+1) & (last_direction'=0) & (last_type'=0) &
+        (last_seq'=0) & (last_block'=0) & (last_event'=7);
+
+    // Explicit self-loops distinguish normal terminal states from deadlocks.
+    [terminal_complete] outcome=1 -> true;
+    [terminal_reject] outcome=2 -> true;
+    [terminal_abort] outcome=3 -> true;
+endmodule
+
+label "release_violation" = sent_honest>verified_peer+LAMBDA;
+label "completed" = outcome=1;
+label "rejected" = outcome=2;
+label "aborted" = outcome=3;
+label "waiting" = outcome=0 & waiting;
+label "terminated" = outcome>0;
+label "release_reached" = outcome=0 & phase=7;
+label "all_open_local" = sent_honest=M & verified_peer=M;
+label "honest_complete" = outcome=1 & sent_honest=M & verified_peer=M
+                          & honest_confirm_sent & peer_confirm_verified;
+label "unexpected_terminal" = phase=9 & outcome=0;

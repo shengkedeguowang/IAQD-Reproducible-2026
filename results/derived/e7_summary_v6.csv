@@ -1,0 +1,10 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E7,ideal_zero_background_full_IMR,,ell_per_sequence,155,,,decoys,complete,50313ada716d8a612d616615a17b74ddfc40cf368006a38d070659e6e0316976,Ideal analytic value only; not an optical deployment parameter.
+E7,threshold_q0_grid,,configurations_with_solution,11,,,configurations,complete,50313ada716d8a612d616615a17b74ddfc40cf368006a38d070659e6e0316976,
+E7,reference_basic_n32_ell4,,actual_total_wire_bytes,5640,,,bytes,complete,9b11a86798e5a84607f0f0fda94f8e987be5607a155c2806c3b15ef871f9e11c,
+E7,reference_basic_n32_ell155,,actual_total_wire_bytes,8515,,,bytes,complete,9b11a86798e5a84607f0f0fda94f8e987be5607a155c2806c3b15ef871f9e11c,
+E7,explicit_full_protocol_phi1,,two_qubit_gates,25,,,gates,complete,6055ebfb59d73cd90a99e484ec6fe1fcfd47c080ceb4836ed55b93f04a3bb09b,Current explicit Qiskit implementation; no minimality claim.
+E7,IAQD_basic,,paper_logical_auth_operations,12,,,operations,complete,45de8ae47aa561703992c71e40da3093deacf2bada4165d2be4b88ff5b754910,
+E7,IAQD_basic,,upper_layer_round_count,5,,,rounds,complete,b3fdc9befd121521d28990ba2c10f92bbf2686e053c166802171765b112c7791,
+E7,IAQD_fair_n32_lambda4,,upper_layer_round_count,22,,,rounds,complete,b3fdc9befd121521d28990ba2c10f92bbf2686e053c166802171765b112c7791,
+E7,reference_basic_n32_ell4,,runtime_median_ms,19.868699950166047,19.72889254250196,20.063600784708385,milliseconds,complete,0a6db2db79ade2b67ef85905131f63240f294d3de6543caf953897a7d752c2b9,Python upper-layer reference implementation; external KE excluded.

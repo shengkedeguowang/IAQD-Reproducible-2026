@@ -1,0 +1,12 @@
+{
+  "aggregate_sha256": "E7B79F58B048F3C4EBE243999A4A03196D87316DF805D191B62D379214554379",
+  "claim_boundary": "finite independent-error DTMC/event model; not a general quantum attack proof",
+  "configurations": 48,
+  "event_trials_per_role": 48000000,
+  "max_analytic_prism_abs_error": 5.329070518200751e-15,
+  "max_empirical_analytic_abs_error": 0.0012204718389504654,
+  "prism_queries": 96,
+  "raw_rows": 960,
+  "raw_sha256": "F43B1F9BF2A651ABCA178728ED621425190C631A367C148712787A7F4CE1E8F1",
+  "zero_attack_accept_configurations": 4
+}

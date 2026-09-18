@@ -1,0 +1,105 @@
+artifact_version: "V6-executed-20260830"
+base_seed: 2026083000
+seeds:
+  - 2026083001
+  - 2026083002
+  - 2026083003
+  - 2026083004
+  - 2026083005
+  - 2026083006
+  - 2026083007
+  - 2026083008
+  - 2026083009
+  - 2026083010
+  - 2026083011
+  - 2026083012
+  - 2026083013
+  - 2026083014
+  - 2026083015
+  - 2026083016
+  - 2026083017
+  - 2026083018
+  - 2026083019
+  - 2026083020
+  - 2026083021
+  - 2026083022
+  - 2026083023
+  - 2026083024
+  - 2026083025
+  - 2026083026
+  - 2026083027
+  - 2026083028
+  - 2026083029
+  - 2026083030
+statistics:
+  confidence_level: 0.95
+  bernoulli_interval: wilson
+  multiple_testing_correction: holm
+e1:
+  hash_algorithm: sha256
+  zipf_exponent: 1.2
+  dictionary_q_fractions: [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0]
+e2:
+  trials_per_seed: 100000
+  event_batch_trials: 5000
+  rare_expected_events_threshold: 25
+  qiskit_shots: 8192
+  alice_z_probability: 0.5
+  adversary_z_probability: 0.8
+e3:
+  theta_grid_points: 101
+  random_crosscheck_angles: 11
+  qiskit_shots: 8192
+e4:
+  qiskit_shots: 8192
+  transpiler_seed: 20260830
+  channel_p_values: [0.0, 0.01, 0.02, 0.05, 0.10, 0.15, 0.20]
+  storage_noise_enabled: true
+  gate_noise_profiles:
+    low: {single_qubit: 0.0005, two_qubit: 0.005, readout: 0.01}
+    medium: {single_qubit: 0.001, two_qubit: 0.01, readout: 0.02}
+    high: {single_qubit: 0.005, two_qubit: 0.03, readout: 0.05}
+e5:
+  mac_trials_per_seed: 1000000
+  mac_batch_size: 100000
+  full_tag_bits: 128
+  bounded_search_max_mutations: 25000
+e6:
+  monte_carlo_trials_per_seed: 100000
+  event_batch_trials: 10000
+  dtmc_lengths: [16, 32, 64, 128]
+  honest_qber_values: [0.0, 0.01, 0.03, 0.05]
+  qber_threshold_values: [0.05, 0.10, 0.15]
+  attack_total_qber: 0.20
+  rare_expected_events_threshold: 25
+  fairness_n_blocks: [4, 8, 16]
+  fairness_lambda_bits: [1, 2, 4, 8]
+  initial_leaders: [alice, bob]
+e7:
+  security_bits: 128
+  f_min_ideal: 1.0
+  target_honest_false_abort: 0.01
+  target_attack_miss: 0.000001
+  decoy_search_max_L: 20000
+  performance_n_blocks: [1, 2, 4, 8, 16, 32]
+  performance_lambda_bits: [1, 2, 4, 8]
+  performance_ell_values: [4, 155]
+  performance_runs: 30
+  transpiler_seed: 20260830
+  transpiler_basis_gates: [rz, sx, x, cx]
+  benchmark_parameter_set:
+    status: benchmark_not_protocol_inherent
+    rho_bits: 256
+    d_H_bits: 256
+    nu_bits: 128
+    h_bits: 256
+    tau_bits: 128
+    commitment_bits: 256
+    salt_bits: 128
+  commitment_salt_bits: 128
+  record_tag_bits: 128
+  gamma_tag_bits: 128
+  ke_mode: ideal_test_fixture
+  kdf_instantiation: benchmark_reference_only
+  commitment_instantiation: benchmark_reference_only
+

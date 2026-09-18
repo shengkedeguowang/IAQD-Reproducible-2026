@@ -1,0 +1,9 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E4,phi1_explicit_preparation,,state_fidelity,0.9999999999999978,,,probability,complete,b1f0eb8ea6c8f2caf833ab83e91c249c70a22e495293c0e87fdd589734075b0f,Hard-coded H/S/X/Y/CX stabilizer-synthesis circuit versus independent Bell expansion.
+E4,phi2_explicit_preparation,,state_fidelity,0.9999999999999978,,,probability,complete,b1f0eb8ea6c8f2caf833ab83e91c249c70a22e495293c0e87fdd589734075b0f,
+E4,all_32_explicit_circuits,,bidirectional_exact_decode_accuracy,0.9999999999999974,,,probability,complete,bfbc4afd10d48fb412c23dff460497d21e0693d404612ee9112f026aeac4b4c5,
+E4,basic_mode_128_exact_branches,,successful_exact_branches,128,,,branches,complete,933d65a08da14d2f3d78a613d1951e308612e07384f85c30c42e44e25ab2a994,128=2 cluster states x 16 message pairs x 4 nonzero Bell branches; each branch reaches COMPLETED with both gamma checks and logical erasure.
+E4,all_32_8192_shots,,bidirectional_shot_decode_accuracy,1.0,,,probability,complete,748d4fda6bfe9fd044a3de3591fc073335108b6395099c0f0a7de55a8f8f9369,
+E4,transmission_depolarizing_p010,,acceptance_rate,0.8574999999999992,,,probability,complete,6315c7607716d3c1aa0ff6a9963fefe6c9664b807b3603be3b9b0ddb90f92fc7,"Noise applied only to transmitted S3,S4 qubits 2,3."
+E4,storage_amplitude_damping_p010,,honest_false_abort,0.1854937499999999,,,probability,complete,6315c7607716d3c1aa0ff6a9963fefe6c9664b807b3603be3b9b0ddb90f92fc7,"Storage noise applied only to local S1,S2,S5,S6 qubits 0,1,4,5."
+E4,gate_measurement_medium,,acceptance_rate,0.7167243957519531,,,probability,complete,894a1faa22e9d5d371dfd22207152abe61e5420c35a25a8bf946d42629ddca41,Aer NoiseModel on actual gates plus separate readout error.

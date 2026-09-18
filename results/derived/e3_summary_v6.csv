@@ -1,0 +1,5 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E3,probe_theta_pi_over_4,,qber,0.07322330470336325,,,probability,complete,c389102abdb77fe6114308f6fa4a2bdef9c86850c2ef0643b5c82897480c419f,Independent NumPy density-matrix path; specified U_theta family only.
+E3,probe_theta_pi_over_4,,trace_distance,0.7071067811865476,,,probability,complete,c389102abdb77fe6114308f6fa4a2bdef9c86850c2ef0643b5c82897480c419f,
+E3,probe_theta_pi_over_4,,helstrom_guess_probability,0.8535533905932737,,,probability,complete,c389102abdb77fe6114308f6fa4a2bdef9c86850c2ef0643b5c82897480c419f,
+E3,grid_and_random_angles,,maximum_absolute_error,2.498001805406602e-16,,,probability,complete,c389102abdb77fe6114308f6fa4a2bdef9c86850c2ef0643b5c82897480c419f,"Includes unitarity, all four BB84 inputs, random non-grid angles, density matrices and independent Qiskit path."

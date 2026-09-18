@@ -1,0 +1,10 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E1,chosen_message_pair,,chosen_message_success,1.0,,,probability,complete,e05142edb19474d4135f67119aaccf38d5623950b7632871a8d1e16be0ae6580,Analytic deterministic conclusion; script is a witness only.
+E1,chosen_message_pair,,privacy_advantage,0.5,,,probability,complete,e05142edb19474d4135f67119aaccf38d5623950b7632871a8d1e16be0ae6580,Analytic deterministic conclusion.
+E1,cross_session_repeated_message,,equality_identification_success,1.0,,,probability,complete,e05142edb19474d4135f67119aaccf38d5623950b7632871a8d1e16be0ae6580,
+E1,abort_terminal_pass_decoy_t3,,pmax_terminal_unfair_output,1.0,,,probability,complete,09c3bc185bef293de3f359b021046ca5f588275c3f932ba7b0f029808fe6cda9,Target requires terminal=true and aborted_by_alice=true.
+E1,abort_timeout_pass_decoy_t3,,shortest_counterexample_length,6,,,transitions,complete,09c3bc185bef293de3f359b021046ca5f588275c3f932ba7b0f029808fe6cda9,send_cb -> alice_recovers_b -> alice_abort -> bob_waiting_for_ca -> timeout -> bob_abort
+E1,abort_terminal_pass_decoy_t3,,reachable_states,9,,,states,complete,09c3bc185bef293de3f359b021046ca5f588275c3f932ba7b0f029808fe6cda9,
+E1,abort_terminal_pass_decoy_t3,,transitions,11,,,transitions,complete,09c3bc185bef293de3f359b021046ca5f588275c3f932ba7b0f029808fe6cda9,
+E1,abort_no_timeout,,pmax_nonterminal_waiting_knowledge_asymmetry,1.0,,,probability,complete,f663cf17fe8692f590133d50cdf9a20b29c79e5882ba49907ebbb7b67f1f32a1,"Nonterminal liveness failure, not terminal fairness output."
+E1,abort_no_timeout,,pmax_terminal_bob_abort,0.0,,,probability,complete,f663cf17fe8692f590133d50cdf9a20b29c79e5882ba49907ebbb7b67f1f32a1,No timeout means Bob abort output is not fabricated.

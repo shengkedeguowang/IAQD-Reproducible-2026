@@ -1,0 +1,22 @@
+// Original AQD early-abort semantics without an assumed timeout rule.
+mdp
+
+module original_aqd_abort_without_timeout
+    phase : [3..8] init 3;
+    Pass_decoy : bool init true;
+    AliceKnowsB : bool init false;
+    BobKnowsA : bool init false;
+    aborted_by_alice : bool init false;
+    BobWaitingForCA : bool init false;
+    terminal : bool init false;
+    OutA_has_B : bool init false;
+    OutB_abort : bool init false;
+
+    [send_cb] phase=3 & Pass_decoy -> (phase'=5);
+    [alice_recovers_b] phase=5 -> (phase'=6) & (AliceKnowsB'=true) & (OutA_has_B'=true);
+    [alice_abort] phase=6 & AliceKnowsB & !BobKnowsA -> (phase'=7) & (aborted_by_alice'=true);
+    [bob_waiting_for_ca] phase=7 & aborted_by_alice -> (phase'=8) & (BobWaitingForCA'=true);
+    [wait_forever] phase=8 & BobWaitingForCA -> (phase'=phase);
+endmodule
+
+label "nonterminal_liveness_failure" = !terminal & BobWaitingForCA & AliceKnowsB & !BobKnowsA & !OutB_abort;

@@ -1,0 +1,954 @@
+\documentclass[UTF8,10pt,a4paper]{ctexart}
+
+\usepackage[a4paper,top=1.75cm,bottom=1.85cm,left=1.65cm,right=1.65cm]{geometry}
+\setlength{\columnsep}{0.72cm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{graphicx,xcolor}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{etoolbox}
+\usepackage{dblfloatfix}
+\usepackage{placeins}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\urlstyle{same}
+
+\ctexset{
+  section={format=\zihao{-4}\bfseries,beforeskip=1.0ex plus .2ex,afterskip=.7ex},
+  subsection={format=\zihao{5}\bfseries,beforeskip=.9ex plus .2ex,afterskip=.5ex},
+  subsubsection={format=\zihao{-5}\bfseries,beforeskip=.8ex plus .2ex,afterskip=.4ex},
+  contentsname={目录}
+}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setlength{\abovedisplayskip}{5pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{5pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{3pt plus 2pt}
+\setlength{\belowdisplayshortskip}{3pt plus 2pt}
+\setlength{\textfloatsep}{9pt plus 2pt minus 2pt}
+\setlength{\floatsep}{7pt plus 2pt minus 2pt}
+\setlength{\intextsep}{7pt plus 2pt minus 2pt}
+\setlist{itemsep=.2ex,topsep=.5ex,parsep=0pt,partopsep=0pt}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=4pt}
+\AtBeginEnvironment{table}{\small}
+\AtBeginEnvironment{table*}{\small}
+\renewcommand{\bibfont}{\footnotesize}
+\setlength{\bibsep}{1pt plus .2ex}
+\emergencystretch=1.5em
+\allowdisplaybreaks[2]
+
+\newtheoremstyle{aqdplain}
+  {.5\baselineskip}{.5\baselineskip}{\normalfont}{}
+  {\bfseries}{。}{.5em}{}
+\theoremstyle{aqdplain}
+\newtheorem{definition}{定义}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\newtheorem{proposition}{命题}
+\newtheorem{remark}{注}
+\renewcommand{\qedsymbol}{\ensuremath{\square}}
+
+\renewenvironment{abstract}{%
+  \par\begin{center}\zihao{-4}\bfseries 摘要\end{center}%
+  \zihao{5}\setlength{\parindent}{2em}\ignorespaces
+}{\par}
+
+\newenvironment{englishabstract}{%
+  \par\zihao{5}\setlength{\parindent}{2em}\noindent
+  \textbf{Abstract:}\enspace\ignorespaces
+}{\par}
+
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\negl}{\operatorname{negl}}
+\newcommand{\Adv}{\operatorname{Adv}}
+\newcommand{\Prb}{\Pr}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\sid}{\mathsf{sid}}
+\newcommand{\prot}{\mathsf{AQD\mbox{-}IAQD}}
+\newcommand{\concat}{\mathbin{\|}}
+\newcommand{\abort}{\bot}
+
+\title{单向量子信道认证量子对话协议的密码分析与改进}
+\author{作者一$^{1}$，作者二$^{1}$，通信作者$^{1,*}$\\
+\small $^{1}$单位名称，城市，邮政编码，中国\\
+\small $^{*}$通信作者：author@example.edu}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+近期，研究者提出一种基于六粒子簇态和单向量子信道的认证量子对话协议，该协议通过一次量子序列传输实现双方秘密消息交换。然而，本文分析发现，原协议公开的消息哈希会泄露消息信息，恶意参与方还可利用消息发布顺序实施提前中止攻击，从而破坏协议的公平性。此外，原协议在密钥派生和量子攻击检测方面的安全论证并不充分。为此，本文提出一种改进的认证量子对话协议，在保留原协议量子通信结构的同时，增强消息隐私性、通信认证能力和消息交换公平性。本文构建博弈化安全模型，对安全属性、敌手能力和攻击成功条件作出形式化定义。在所列量子分发与密码组件假设下，本文通过混合游戏归约与事件前缀归纳，给出面向外部敌手、未腐化参与方的双向转录隐私、认证安全和有界公平性的条件性博弈安全上界。原协议的安全问题以及改进协议在量子计算环境中的可行性，均通过Qiskit仿真和概率模型检验得到复核。
+\end{abstract}
+
+\par\noindent\zihao{5}\textbf{关键词：}认证量子对话；密码分析；博弈化安全；有界公平性
+
+\twocolumn
+\section{AQD协议分析的背景与范围}
+\label{sec:introduction}
+
+量子对话（quantum dialogue，QD）旨在使两个参与方在同一次协议执行中相互交换秘密消息。Nguyen较早利用纠缠态提出QD协议，为双向量子秘密通信建立了基本框架\citep{nguyen2004qd}。随后，Man等指出该协议不能抵抗截获--重发攻击，并通过随机选择测量基进行改进\citep{man2005revisited}；Ji等利用单光子序列构造QD协议\citep{ji2006single}；Xia等采用非最大纠缠态和纠缠交换实现双向消息传递\citep{xia2007nonmax}。这些研究推动QD由最初的纠缠态方案逐步发展为采用多种量子资源和编码方式的双向通信协议。
+
+随着研究深入，QD的安全目标由消息交换和窃听检测逐步扩展到身份认证与消息完整性。为防止伪造、冒充和经典消息篡改，研究者进一步提出认证量子对话。Naseri利用认证密钥构造量子安全对话协议\citep{naseri2011auth}；Shen等基于Bell态实现参与方身份认证，但Lin等随后证明该方案仍可能遭受中间人攻击\citep{shen2013auth,lin2013mitm}。此后，测量设备无关结构、专用认证函数、字典编码和云环境数据交换等方法被引入QD，以增强身份认证能力并拓展应用场景\citep{maitra2017mdi,feng2021auth,meng2023cloud}。
+
+除安全层面的持续迭代外，QD 协议的优化同时围绕传输性能维度展开。许多早期QD依赖量子粒子在参与方之间双向或往返传输，容易增加信道损耗、噪声累积、量子态退相干和实现攻击风险。为降低量子通信复杂度，Ye、Kao和Zhu等分别利用逻辑Bell态、簇态和一步式交互构造单向QD方案\citep{ye2015oneway,kao2017controlled,zhu2024onestep}。
+
+近期，在单向传输与身份认证需求的共同推动下，Zhang等提出一种基于六粒子簇态和单向量子信道的认证量子对话协议（authenticated quantum dialogue，AQD）\citep{zhang2025aqd}。该方案只需一次单向量子序列传输，同时设置身份认证和结果验证机制，在通信复杂度、传输效率和协议功能方面具有一定优势。原文还通过IBM Qiskit和概率模型验证了量子线路的可行性及其在噪声环境下的运行情况。
+
+然而，本文分析发现，原协议公开的消息哈希会泄露消息等值关系，并使低熵消息面临离线字典恢复风险；不对称的消息发布顺序还允许恶意参与方在获得对方消息后提前退出，造成交换结果不公平。此外，原方案在密钥派生、截获--测量--重发攻击检测概率和纠缠--测量攻击分析方面仍存在证明缺口。这些问题主要位于经典转录、交互时序和安全论证层面，并不要求攻击者破坏六粒子簇态或直接破解量子信道。
+
+该协议暴露出的问题并非个案，而是同类 QD协议普遍需要面对的共性安全挑战。已有工作证实，即便量子信道本身未被攻破，公开经典信息与秘密消息之间的关联仍会引发信息泄露问题 \citep {gao2008revisiting,liu2019revising,ye2022dialogue}；若认证机制没有完整绑定通信身份、消息方向与会话上下文，协议依旧会遭受中间人攻击或经典消息篡改 \citep {shen2013auth,lin2013mitm}；同时合法内部参与方也可利用自身掌握的密钥、本地测量结果，偏离协议既定流程实施破坏行为 \citep {zhang2025dishonest}。据此可以归纳出评价 QD 协议安全能力的三个核心问题：公开转录是否会泄露秘密消息相关信息，身份认证是否完整绑定会话上下文，消息发布顺序是否会引入非对称信息优势。
+
+量子力学基本原理能够保证特定量子操作的物理性质，却不能自动保证由量子信道、经典通信、身份认证和多方交互共同组成的完整协议安全。量子密钥分发研究已经由针对特定攻击的分析逐步发展为具有明确攻击者能力、安全参数和理想功能的可组合安全证明\citep{shor2000simple,portmann2014qkd}；近期量子签名研究也开始通过安全游戏定义攻击接口和获胜条件，并将协议安全性归约到基础密码组件或量子力学性质\citep{zhang2026qbs}。相比之下，现有不少QD研究仍主要通过列举已知攻击及其检测概率说明安全性，缺少统一的博弈化刻画。因此，QD协议需要明确的博弈化安全模型及密码学归约证明。
+
+针对上述问题，本文分析并复现AQD协议的消息泄露和提前中止攻击，澄清其密钥派生和量子攻击检测论证中的证明缺口；在保留六粒子簇态和单向量子传输结构的基础上，提出一种改进的认证量子对话（Improved Authenticated Quantum Dialogue，IAQD）协议；在所列量子分发与密码组件假设下，构建适用于AQD的博弈化安全模型，并通过混合游戏和密码学归约给出消息隐私、认证完整性与抗重放性的条件性安全上界，通过事件前缀归纳给出$\lambda$-有界公平性上界；最后结合量子线路仿真、概率实验和模型检验，对原协议的安全问题以及改进协议在所考察模型与参数范围内的可行性进行验证。
+
+本文其余部分安排如下：第~\ref{sec:review}节回顾AQD协议；第~\ref{sec:cryptanalysis}节分析原协议的安全问题；第~\ref{sec:iaqd}节提出IAQD及其安全模型；第~\ref{sec:security}节给出改进协议的安全性分析与仿真验证；第~\ref{sec:discussion}节给出讨论与结论。
+
+\section{AQD协议回顾}
+\label{sec:review}
+
+\subsection{参与方与量子资源}
+
+Zhang等提出的AQD协议\citep{zhang2025aqd}包含两个通信参与方Alice和Bob。双方分别持有待交换的经典秘密消息
+$A=(a_1,\ldots,a_n)$ 和 $B=(b_1,\ldots,b_n)$，其中
+$a_i,b_i\in\{00,01,10,11\}$，并预先共享认证密钥$K$。
+
+Alice负责制备六粒子簇态，并保留粒子序列$S_1$、$S_2$、$S_5$和$S_6$；Bob通过Alice到Bob的单向量子信道接收$S'_3$和$S'_4$。量子序列只传输一次，后续编码和测量均在双方本地完成；经典信道用于接收确认、诱骗信息公开、密文发布和结果验证。
+
+四个 Bell 态定义为
+\begin{align}
+|\phi_{00}\rangle&=(|00\rangle+|11\rangle)/\sqrt{2},\nonumber\\
+|\phi_{10}\rangle&=(|00\rangle-|11\rangle)/\sqrt{2},\nonumber\\
+|\phi_{01}\rangle&=(|01\rangle+|10\rangle)/\sqrt{2},\nonumber\\
+|\phi_{11}\rangle&=(|01\rangle-|10\rangle)/\sqrt{2}.
+\label{eq:bell}
+\end{align}
+原协议使用的两类六粒子簇态在 Bell 基下可写为
+\begin{align}
+|\varphi_1\rangle_{123456}=\frac{1}{2}\big(&
+ |\phi_{00}\rangle_{12}|\phi_{00}\rangle_{34}|\phi_{01}\rangle_{56}\nonumber\\
+&+|\phi_{00}\rangle_{12}|\phi_{01}\rangle_{34}|\phi_{10}\rangle_{56}\nonumber\\
+&-|\phi_{11}\rangle_{12}|\phi_{10}\rangle_{34}|\phi_{01}\rangle_{56}\nonumber\\
+&-|\phi_{11}\rangle_{12}|\phi_{11}\rangle_{34}|\phi_{10}\rangle_{56}\big),
+\label{eq:phi1}\\
+|\varphi_2\rangle_{123456}=\frac{1}{2}\big(&
+ |\phi_{01}\rangle_{12}|\phi_{00}\rangle_{34}|\phi_{01}\rangle_{56}\nonumber\\
+&+|\phi_{01}\rangle_{12}|\phi_{01}\rangle_{34}|\phi_{10}\rangle_{56}\nonumber\\
+&+|\phi_{10}\rangle_{12}|\phi_{10}\rangle_{34}|\phi_{01}\rangle_{56}\nonumber\\
+&+|\phi_{10}\rangle_{12}|\phi_{11}\rangle_{34}|\phi_{10}\rangle_{56}\big).
+\label{eq:phi2}
+\end{align}
+两比特消息块与单量子比特操作的映射为
+\begin{align}
+U_{00}&=I, & U_{01}&=X,\nonumber\\
+U_{10}&=Z, & U_{11}&=iY.
+\label{eq:pauli-map}
+\end{align}
+全局相位不会改变后续 Bell 基测量结果。记 $H$ 为原协议采用的单向哈希函数，$E_k$ 和 $D_k$ 为一次一密加解密操作，即
+\begin{equation}
+E_k(X)=D_k(X)=X\oplus k.
+\label{eq:orig-otp}
+\end{equation}
+
+\subsection{簇态关联与编码规则}
+
+式~\eqref{eq:phi1}--\eqref{eq:phi2} 的关键不是计算基振幅本身，而是三组粒子对 $(1,2)$、$(3,4)$、$(5,6)$ 的 Bell 标签关联。令三组 Bell 标签分别为 $x_{12},x_{34},x_{56}\in\{00,01,10,11\}$，则非零项如表~\ref{tab:cluster-correlation} 所示。
+
+\begin{table}[t]
+\centering
+\caption{两类六粒子簇态的 Bell 标签关联}
+\label{tab:cluster-correlation}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+初始态 & 项 & $x_{12}$ & $x_{34}$ & $x_{56}$ \\
+\midrule
+$|\varphi_1\rangle$ & 1 & 00 & 00 & 01 \\
+ & 2 & 00 & 01 & 10 \\
+ & 3 & 11 & 10 & 01 \\
+ & 4 & 11 & 11 & 10 \\
+\midrule
+$|\varphi_2\rangle$ & 1 & 01 & 00 & 01 \\
+ & 2 & 01 & 01 & 10 \\
+ & 3 & 10 & 10 & 01 \\
+ & 4 & 10 & 11 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+若在 Bell 对的第一个粒子上执行 $U_z$，则忽略全局相位后有
+\begin{equation}
+\begin{gathered}
+(U_z\otimes I)|\phi_x\rangle\equiv|\phi_{x\oplus z}\rangle,\\
+x,z\in\{00,01,10,11\}.
+\end{gathered}
+\label{eq:bell-xor}
+\end{equation}
+式~\eqref{eq:bell-xor} 是原协议编码表的代数化表达：若编码前 Bell 标签为 $m$，施加 $U_z$ 后测量得到 $\widetilde m$，则编码消息满足 $z=m\oplus\widetilde m$。原协议据此分别记 Bob 和 Alice 编码前的关联标签为 $M_B,M_A$，编码后的 Bell 测量标签为 $\widetilde M_B,\widetilde M_A$，并通过
+\begin{equation}
+\begin{aligned}
+B &= M_B\oplus\widetilde M_B,\\
+A &= M_A\oplus\widetilde M_A.
+\end{aligned}
+\label{eq:orig-recovery}
+\end{equation}
+恢复双方消息。
+
+\subsection{协议流程}
+
+原协议的执行过程如下。
+
+\begin{enumerate}[leftmargin=*,label=\textbf{步骤 \arabic*.}]
+  \item Alice 独立随机制备 $n$ 个 $|\varphi_1\rangle$ 或 $|\varphi_2\rangle$，将各簇态的第 $j$ 个粒子组成序列 $S_j$，$j=1,\ldots,6$。
+  \item Alice 从 $\{|0\rangle,|1\rangle,|+\rangle,|-\rangle\}$ 中随机选择足够的诱骗粒子（即原文中的检测粒子），分别插入 $S_3$ 和 $S_4$，得到 $S'_3,S'_4$，并通过单向量子信道发送给 Bob。
+  \item Bob 报告接收后，Alice 公布诱骗粒子位置、制备基和初态。Bob 按公布基测量诱骗粒子，当估计量子比特误码率（QBER）超过阈值时中止；否则删除诱骗粒子。Alice 对每组 $(S_1,S_2)$ 执行 Bell 基测量。
+  \item 对每个 $i$，Bob 根据 $b_i$ 在粒子 $s_i^3$ 上执行 $U_{b_i}$，随后对 $(\widetilde{s_i^3},s_i^4)$ 进行 Bell 基测量，得到字符串 $\widetilde M_B$。
+  \item Bob 根据初始簇态关联推断 $M_B$，计算 $K_b=H(K\concat M_B)$，并公开
+  \begin{equation}
+      C_B=E_{K_b}(\widetilde M_B).
+      \label{eq:orig-cb}
+  \end{equation}
+  \item Alice 根据 $a_i$ 在粒子 $s_i^5$ 上执行 $U_{a_i}$，并对 $(\widetilde{s_i^5},s_i^6)$ 进行 Bell 基测量，得到 $\widetilde M_A$。依据自身测量结果与簇态关联，Alice 同时能够确定 $M_B$。
+  \item Alice 推断 $M_A$，计算 $K_a=H(K\concat M_A)$，公开
+  \begin{equation}
+      C_A=E_{K_a}(\widetilde M_A).
+      \label{eq:orig-ca}
+  \end{equation}
+  \item Alice 解密 $C_B$ 并计算 $B=M_B\oplus\widetilde M_B$；Bob 解密 $C_A$ 并计算 $A=M_A\oplus\widetilde M_A$。
+  \item Alice 与 Bob 分别公开 $H(B)$ 和 $H(A)$，用于核验恢复消息。
+\end{enumerate}
+
+原协议仅在步骤2执行量子传输。为明确后续安全分析的对象，记接收通知为 $R_{\mathrm{recv}}$，诱骗粒子位置、制备基和初态的公开信息为 $D_{\mathrm{decoy}}$，则一次执行产生的公开转录为
+\begin{equation}
+\begin{aligned}
+T_{\mathrm{orig}}=(&R_{\mathrm{recv}},D_{\mathrm{decoy}},C_B,C_A,\\
+&H(B),H(A)),
+\end{aligned}
+\label{eq:orig-transcript}
+\end{equation}
+其中最关键的发布顺序为
+\begin{equation}
+C_B\longrightarrow C_A\longrightarrow\{H(B),H(A)\}.
+\label{eq:orig-release-order}
+\end{equation}
+第~\ref{sec:cryptanalysis}节将在不改变上述量子线路与协议顺序的前提下，分析该公开转录及参与方可获得的信息。
+
+
+
+\section{AQD协议安全性分析}
+\label{sec:cryptanalysis}
+
+本章证明AQD协议不能抵抗公开消息摘要攻击和提前中止攻击。
+此外，原协议在密钥派生、IMR检测概率和EM分析方面存在证明缺口，
+并缺少会话绑定与转录认证约束。前两项属于可执行攻击，
+后三项属于证明缺口，最后一项属于协议规范遗漏。
+
+\subsection{公开消息摘要导致转录隐私失效}
+\label{sec:hash-leak}
+在AQD方案中，Alice和Bob分别公开确定性消息摘要$H(B)$和$H(A)$，以验证恢复结果\citep{zhang2025aqd}。然而，本文发现该摘要不包含秘密密钥或会话随机量，因此任何外部观察者均可对候选消息计算哈希并与公开值比较。公开摘要实际上构成了一个消息等值测试器。该问题发生在经典转录层，与攻击者是否截获量子信道无关，并具体表现为选择消息区分、跨会话可链接性和低熵消息字典恢复三种风险。下面说明公开消息摘要如何导致转录隐私失效。
+
+
+首先考虑选择消息区分。攻击者选取两条等长候选消息$A_0,A_1$，满足$H(A_0)\neq H(A_1)$。挑战者随机选择$b\in\{0,1\}$，以$A_b$执行协议并公开$h=H(A_b)$。攻击者分别计算$H(A_0)$和$H(A_1)$，再将其与$h$比较，即可确定实际使用的消息。因此，攻击者的判断正确率为$1$。若隐私优势定义为
+\[
+\Adv=\left|\Pr[b'=b]-\frac{1}{2}\right|,
+\]
+则该攻击的优势为$1/2$。整个过程仅需要两次哈希计算和一次等值比较，时间复杂度为$O(|A_0|+|A_1|)$，并不涉及哈希原像求解。
+
+其次，在哈希函数碰撞概率可忽略的条件下，同一消息在不同会话中产生相同摘要。攻击者即使不能恢复消息内容，也可以通过比较公开哈希判断不同会话是否使用了相同消息，从而获得秘密消息的重复关系和通信行为模式。
+
+当秘密消息来自有限且可枚举的低熵集合$\mathcal D$时，公开摘要还会导致离线字典攻击。攻击者可以预先计算所有候选消息的哈希并建立查找表，随后将公开的$H(A)$或$H(B)$与表中记录比较。若一次哈希计算的开销为$T_H$，完整字典的预处理时间为$O(|\mathcal D|T_H)$。记$\mathcal D_q$为先验概率最高的$q$个候选消息组成的集合，则测试这些候选后的消息恢复成功率为
+\begin{equation}
+P_{\mathrm{rec}}(q)
+ =\sum_{x\in\mathcal D_q}\Pr[A=x].
+\label{eq:dict}
+\end{equation}
+该成功率取决于消息的先验分布和攻击者的查询预算，而不是哈希原像问题的计算难度。增加哈希输出长度只能降低碰撞概率，不能提高原始消息的最小熵，因而无法消除上述风险。因此，原协议公开$H(A)$和$H(B)$的做法不满足转录隐私要求。
+
+\subsection{确定性提前中止与强公平性失败}
+
+在AQD协议的步骤5至步骤9中，Bob首先公布密文$C_B$，Alice随后才发送密文$C_A$\citep{zhang2025aqd}。原方案未给出公平交换安全游戏及其获胜条件；若进一步要求协议满足强公平性，则上述发布顺序会形成有利于恶意Alice的提前中止窗口。该攻击由持有合法密钥和本地测量结果的内部参与方实施，不属于外部窃听者针对量子信道的保密性攻击。表~\ref{tab:knowledge-evolution}给出了双方在关键时刻与恢复对方消息相关的信息。下面以此为基础说明该提前中止攻击。
+
+\begin{table}[t]
+\centering
+\caption{提前中止窗口中的信息变化}
+\label{tab:knowledge-evolution}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\columnwidth}{
+  @{}
+  >{\centering\arraybackslash}p{1.35cm}
+  >{\raggedright\arraybackslash}X
+  >{\raggedright\arraybackslash}X
+  @{}
+}
+\toprule
+时刻（公开量） & Alice状态 & Bob状态 \\
+\midrule
+$t_5$（$C_B$）
+& 尚缺少完整的$M_B$
+& 持有$M_B,\widetilde M_B,K_b$ \\
+
+$t_6$（无）
+& 可由$M_B,C_B,K$恢复$B$
+& 尚缺少$C_A,\widetilde M_A$ \\
+
+$t_7$（$C_A$）
+& 已恢复$B$，此前可以中止
+& 收到$C_A$后方可恢复$A$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+具体而言，Bob在步骤5公布$C_B$。Alice在步骤6完成Bell基测量后得到$M_B$，进而计算
+$K_b=H(K\concat M_B)$，由$C_B$解出$\widetilde M_B$，并按照
+$B=M_B\oplus\widetilde M_B$恢复Bob的秘密消息。此时Alice尚未发送$C_A$，因而可以停止执行协议。由于缺少$C_A$，Bob无法按照原协议恢复$A$；若协议规定在等待超时后终止会话，则Bob最终输出$\abort$。因此，在量子分发检测已经通过、协议执行到步骤6且信道无噪声的条件下，恶意Alice可以确定性地造成
+\begin{equation}
+\Prb\!\left[
+\mathsf{Out}_A=B\wedge\mathsf{Out}_B=\abort
+\mid \mathsf{Reach}(t_6),\mathsf{Pass}_{\mathrm{decoy}}
+\right]=1.
+\label{eq:unfair}
+\end{equation}
+若协议未规定超时终止机制，则相同攻击表现为Bob持续等待的活性失败，而非立即输出$\abort$。
+
+原论文给出的$n=3$示例可以直接说明这一攻击窗口。相应的Bell标签为
+\begin{align}
+M_B&=(00,11,10),&
+\widetilde M_B&=(10,00,11),\nonumber\\
+M_A&=(01,10,01),&
+\widetilde M_A&=(01,11,10).
+\label{eq:source-example}
+\end{align}
+其中$K_b=101110$且$C_B=001101$。Alice获得$M_B$后可以计算
+\[
+\widetilde M_B=C_B\oplus K_b=100011
+\]
+并恢复
+\[
+B=M_B\oplus\widetilde M_B=101101.
+\]
+此时Bob仍需等待$C_A$才能按照协议恢复$A$。因此，步骤6结束至$C_A$发送之前构成双方消息知识不对称的提前中止窗口，说明原协议不满足上述强公平性目标。
+
+
+\subsection{密钥派生假设不足}
+
+AQD方案将$K_a=H(K\concat M_A)$和$K_b=H(K\concat M_B)$直接用作一次一密掩码，但只要求$H$具有单向性\citep{zhang2025aqd}。然而，单向性描述的是由输出恢复输入的困难程度，并不保证输出均匀或不可区分于随机值。
+
+若设$G$是输出$r-1$比特的单向函数，并构造
+\begin{equation}
+H(x)=0\concat G(x).
+\end{equation}
+求逆$H$至少与求逆$G$同样困难，因此$H$仍可保持单向性；但其首位恒为0，输出显然不均匀。该反例说明，单向性不能推出伪随机性，也不能保证$K_a$和$K_b$在相关输入下相互独立。
+
+现有研究表明一次一密要求掩码均匀、保密、与明文独立且不重复使用\citep{shannon1949}。若采用计算安全的流加密，则必须给出PRF、PRG或KDF假设。因此原方案密钥派生证明不足，未构造出完整的明文恢复攻击。
+
+\subsection{IMR攻击检测概率修正}
+\label{sec:imr-correction}
+
+AQD方案将$1-(1/2)^{2\ell}$作为IMR攻击检测概率\citep{zhang2025aqd}，但本文发现，其未区分随机态替换与随机基测量--重发。设两个传输序列共包含$L=2\ell$个诱骗粒子。
+
+若Eve将每个粒子替换为随机诱骗态，则单个诱骗粒子与原状态匹配的概率为$1/2$，因此
+\begin{equation}
+\begin{aligned}
+P_{\mathrm{und}}^{\mathrm{replace}}&=(1/2)^L,\\
+P_{\mathrm{det}}^{\mathrm{replace}}&=1-(1/2)^L.
+\end{aligned}
+\label{eq:replace}
+\end{equation}
+若Eve随机选择测量基并重发，则其以$1/2$概率选对基；选错基时，Bob仍以$1/2$概率得到原比特。因此，单个诱骗粒子的通过概率为$3/4$，整体检测概率为
+\begin{equation}
+\begin{aligned}
+P_{\mathrm{und}}^{\mathrm{IMR}}&=(3/4)^L,\\
+P_{\mathrm{det}}^{\mathrm{IMR}}&=1-(3/4)^L.
+\end{aligned}
+\label{eq:imr}
+\end{equation}
+
+两式表明，AQD方案概率只对应全量随机态替换，不能作为标准随机基IMR的通用检测概率。若每个粒子独立地以概率$f$受到攻击，两类策略的漏检概率分别变为$(1-f/2)^L$和$(1-f/4)^L$。在含噪环境中，接收条件通常是经验QBER不超过阈值，此时误接受率与误拒绝率还取决于诱骗粒子数量、真实错误率和有限样本尾概率。
+
+\subsection{EM证明缺口与信息--扰动关系}
+\label{sec:em-gap}
+
+AQD方案中EM分析主要消除了计算基上的比特翻转项\citep{zhang2025aqd}，但没有完整证明共轭基也保持不变。为说明该差异，考虑如下不翻转计算基比特的探针族：
+\begin{align}
+U_\theta|0\rangle|0_E\rangle&=|0\rangle|0_E\rangle,\nonumber\\
+U_\theta|1\rangle|0_E\rangle&=|1\rangle\bigl(\cos\theta|0_E\rangle
++\sin\theta|1_E\rangle\bigr).
+\label{eq:probe}
+\end{align}
+该作用不会在$Z$基诱骗态上产生比特翻转，但会扰动$X$基态。若四个BB84态等概率出现，平均QBER为
+\begin{equation}
+Q(\theta)=\frac{1-\cos\theta}{4}.
+\label{eq:qbertheta}
+\end{equation}
+两个$Z$基比特对应的辅助态迹距离为$\sin\theta$，因此Eve在等先验条件下的最优猜测概率为\citep{helstrom1976}
+\begin{equation}
+P_{\mathrm{guess}}(\theta)=\frac{1+\sin\theta}{2}.
+\label{eq:helstrom}
+\end{equation}
+
+当$\theta>0$时，Eve获得高于随机猜测的比特信息，同时在共轭基上引入正扰动；当$\theta=0$时，扰动消失，猜测概率降为$1/2$。这一探针族说明，仅证明计算基无比特翻转不足以推出“无扰动即无信息”，完整EM分析还需要共轭基约束。该结论用于指出原证明不完备，其适用范围限于上述探针族；一般相干攻击仍需完整量子信道分析。
+
+\subsection{会话绑定与转录认证缺失}
+
+原协议没有明确把协议版本、参与方身份、消息方向、会话随机数、协商参数和序列号绑定到经典记录，也没有规定Alice只能在验证Bob的认证接收确认后公开诱骗信息\citep{zhang2025aqd}。因此，在攻击者能够调度经典信道时，协议文本不能排除重放、反射、跨会话替换和诱骗信息提前公开。
+
+该问题属于协议规范遗漏。消除该风险需要明确认证输入、伙伴会话、消息方向、序列号以及重复或乱序记录的处理状态。
+
+\subsection{AQD协议的辅助验证结果}
+
+本节通过数值实验复核原协议的攻击轨迹和概率推导。公开哈希选择消息判断的正确率为$1$，相应隐私优势为$1/2$；在诱骗检测已经通过的条件下，提前中止MDP得到不公平输出的最大可达概率为$1$，最短反例包含6次状态转移。
+
+IMR实验覆盖不同诱骗粒子数、攻击比例和攻击策略，Monte Carlo结果与解析值的最大绝对误差为$7.06\times10^{-4}$。当$L=16$、$f=1$时，随机基IMR和随机态替换的检测率分别为$0.9899$和$0.9999$。图~\ref{fig:e2-imr}表明，漏检概率随攻击比例增加而下降，数值结果与式~\eqref{eq:imr}的解析结果一致。
+
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]
+  {figures/e2_event_mc_vs_analytic_v6.pdf}
+  \caption{$L=16$时随机基IMR漏检概率的解析值与Monte Carlo结果。}
+  \label{fig:e2-imr}
+\end{figure}
+
+EM实验得到的密度矩阵数值结果与式~\eqref{eq:qbertheta}--\eqref{eq:helstrom}一致，最大绝对误差为$2.50\times10^{-16}$。当$\theta=\pi/4$时，QBER为$0.0732$，Eve的最优猜测概率为$0.8536$。图~\ref{fig:e3-probe}表明，在该探针模型下，信息增益随检测扰动同步增加。
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]
+  {figures/e3_information_disturbance_v6.pdf}
+  \caption{EM探针的QBER与最优猜测概率。}
+  \label{fig:e3-probe}
+\end{figure}
+
+
+
+\section{改进认证量子对话协议 IAQD}
+\label{sec:iaqd}
+
+为保持原AQD协议的量子通信结构，改进方案沿用原方案的角色设置、六粒子簇态、Pauli编码、Bell基测量以及单次单向量子传输；秘密消息依旧通过Pauli操作编码，依靠簇态Bell标签关联完成消息恢复。本方案重构经典记录保护、会话绑定与消息发布逻辑，消除公开消息哈希并抵御伪造与重放；可选公平模式进一步限制提前中止造成的信息优势。
+
+本文将会话密钥生成抽象为认证共享密钥建立原语$\mathsf{KE}$；可组合安全的认证QKD可作为该原语的实例\citep{portmann2014qkd}。$\mathsf{KE}$产出的新鲜共享密钥仅用于保护公开经典记录，簇态依旧承担双向消息编码恢复功能。
+
+
+\subsection{初始化阶段}
+
+\textbf{步骤 I1：} Alice和Bob交换随机数$N_A,N_B$及协议参数，计算会话标识
+\begin{equation}
+\begin{aligned}
+\sid=H_{\mathrm{sid}}(&\mathtt{IAQD}\concat ID_A\concat ID_B
+\concat N_A\\
+&\concat N_B\concat\mathtt{params}).
+\end{aligned}
+\label{eq:sid}
+\end{equation}
+
+\textbf{步骤 I2：} 双方调用认证共享密钥建立原语
+\begin{equation}
+(K_S^A,K_S^B)\leftarrow
+\mathsf{KE}(1^\kappa,ID_A,ID_B,\sid).
+\label{eq:ke}
+\end{equation}
+若原语输出$\abort$，双方终止协议；否则，双方验证密钥标识并令$K_S=K_S^A=K_S^B$。设每方消息包含$n$个两比特块，$\mathsf{KE}$输出满足$|K_S|\geq 4n+6\kappa$。$\operatorname{Split}$仅将均匀密钥$K_S$确定性解析为以下互不重叠的子串，不承担熵扩展功能：
+\begin{equation}
+\begin{aligned}
+\operatorname{Split}(K_S)=(&K_A^{\mathrm{otp}},K_B^{\mathrm{otp}},
+K_A^{\mathrm{mac}},K_B^{\mathrm{mac}},\\
+&K_A^{\mathrm{conf}},K_B^{\mathrm{conf}},
+K^{\mathrm{ack}},K^{\mathrm{dist}}).
+\end{aligned}
+\label{eq:keys}
+\end{equation}
+$K_A^{\mathrm{otp}}$和$K_B^{\mathrm{otp}}$的长度均为$2n$比特，且每段密钥只使用一次；其余六段子密钥长度均为$\kappa$比特，分别用于方向认证、消息确认、接收确认和诱骗信息认证。会话结束后，双方擦除$K_S$及全部子密钥。
+
+\textbf{步骤 I3：} 每条经典记录均绑定
+\begin{equation}
+\mathsf{hdr}=(\mathtt{ver},\sid,ID_s,ID_r,
+\mathtt{dir},\mathtt{type},\mathtt{seq},T_Q),
+\label{eq:canonical-header}
+\end{equation}
+其中$\mathtt{dir}$表示消息方向，$\mathtt{seq}$为该方向的递增序列号，$T_Q$为本次量子分发及诱骗检测结果的规范化摘要。身份、方向、序列号或会话标识不匹配时，接收方终止协议。
+
+\subsection{量子分发阶段}
+
+\textbf{步骤 I4：} Alice按照第~\ref{sec:review}节制备六粒子簇态序列，并向$S_3,S_4$中分别随机插入$\ell$个诱骗粒子，得到$S'_3,S'_4$后发送给Bob。
+
+\textbf{步骤 I5：} 记$L_3,L_4$分别为Bob接收的$S'_3,S'_4$序列长度；诚实执行时$L_3=L_4=n+\ell$。Bob确认量子序列完整到达后返回认证回执
+\begin{equation}
+\tau_{\mathrm{ack}}=\operatorname{MAC}_{K^{\mathrm{ack}}}
+(\sid\concat ID_B\concat ID_A\concat\mathtt{QRECV}
+\concat L_3\concat L_4).
+\label{eq:ack}
+\end{equation}
+Alice验证回执后，才公布诱骗粒子位置、制备基和初态$D_{\mathrm{decoy}}$，并计算
+$\tau_{\mathrm{dist}}=\operatorname{MAC}_{K^{\mathrm{dist}}}
+(\mathsf{hdr}_{\mathrm{dist}}\concat D_{\mathrm{decoy}})$。
+Bob验证标签后完成测量并计算QBER；若QBER超过阈值$q_{\mathrm{th}}$，或者任一认证标签验证失败，则双方输出$\abort$。
+
+\subsection{对话阶段}
+
+\textbf{步骤 I6：} 诱骗检测通过后，Alice和Bob沿用原协议的Pauli编码、Bell基测量及簇态关联规则，分别得到$M_A,M_B,\widetilde M_A,\widetilde M_B$。
+
+\textbf{步骤 I7：} 在基础模式下，双方计算
+\begin{align}
+C_P&=\widetilde M_P\oplus K_P^{\mathrm{otp}},\nonumber\\
+\tau_P&=\operatorname{MAC}_{K_P^{\mathrm{mac}}}
+(\mathsf{hdr}_P\concat C_P),
+\qquad P\in\{A,B\},
+\label{eq:records}
+\end{align}
+并交换$(\mathsf{hdr}_P,C_P,\tau_P)$。接收方首先验证会话标识、方向、序列号和MAC，验证通过后才解密$C_P$。Alice根据$M_B$和$\widetilde M_B$恢复$B$，Bob根据$M_A$和$\widetilde M_A$恢复$A$。
+
+\textbf{步骤 I8：} 双方不再公开$H(A)$和$H(B)$，而是交换密钥保护的消息确认标签
+\begin{align}
+\gamma_A&=\operatorname{PRF}_{K_A^{\mathrm{conf}}}
+(\sid\concat\mathtt{A\mbox{-}conf}\concat A
+\concat C_A\concat C_B\concat T_Q),\nonumber\\
+\gamma_B&=\operatorname{PRF}_{K_B^{\mathrm{conf}}}
+(\sid\concat\mathtt{B\mbox{-}conf}\concat B
+\concat C_A\concat C_B\concat T_Q).
+\label{eq:confirmation}
+\end{align}
+Bob使用恢复的$A$重新计算并验证$\gamma_A$，Alice使用恢复的$B$重新计算并验证$\gamma_B$。标签验证通过时接受对方消息，否则输出$\abort$。确认函数采用对量子多项式时间敌手安全的PRF，并由新鲜会话密钥保护，因此公开转录不再提供可复用的消息等值测试条件。
+
+\subsection{可选的公平释放阶段}
+
+基础模式不保证恶意参与方中止时的公平性。需要限制信息优势时，双方启用公平模式。Alice和Bob分别生成与$\widetilde M_A,\widetilde M_B$等长的随机掩码$R_A,R_B$，并将步骤I7中的密文替换为
+\begin{equation}
+C_P=\widetilde M_P\oplus K_P^{\mathrm{otp}}\oplus R_P,
+\qquad P\in\{A,B\}.
+\label{eq:masked-records}
+\end{equation}
+双方把$R_P$划分为长度不超过$\lambda$的块，并使用量子安全的计算承诺方案生成
+\begin{equation}
+d_{P,j}=\operatorname{Com}
+(\sid\concat P\concat j\concat R_{P,j};s_{P,j}).
+\label{eq:commitment}
+\end{equation}
+双方首先交换并认证全部承诺，随后交替开放掩码块；第一轮的先手由$\sid$确定，此后每轮交换先后顺序。任何参与方均不能在未验证对方当前开放的情况下推进状态。即使接收一块后立即中止，双方可恢复消息位数之差也不超过$\lambda$。该机制依赖承诺的计算隐藏性与计算绑定性，因而只提供计算意义下的$\lambda$-有界公平；若要求无条件强公平，需要引入可信第三方。
+
+\subsection{一个简单示例}
+
+沿用原协议$n=3$示例中的Bell标签，取
+$\widetilde M_B=100011$、$\widetilde M_A=011110$，并令
+$K_B^{\mathrm{otp}}=101010$、$K_A^{\mathrm{otp}}=110011$，其中两段密钥均取自本次$\mathsf{KE}$输出且只使用一次。基础模式下有
+\begin{align}
+C_B&=100011\oplus101010=001001,\nonumber\\
+C_A&=011110\oplus110011=101101.
+\label{eq:iaqd-base-example}
+\end{align}
+双方验证记录MAC并解密后，分别恢复$B=101101$和$A=000111$，再通过式~\eqref{eq:confirmation}中的PRF标签完成消息确认。若启用公平模式并取$R_B=010101$、$R_A=001100$，则
+\begin{align}
+C_B^{\mathrm{fair}}&=011100,&
+C_A^{\mathrm{fair}}&=100001.
+\label{eq:iaqd-fair-example}
+\end{align}
+当$\lambda=2$时，掩码按2比特分块开放，任意协议前缀中双方可恢复消息位数之差至多为2比特。
+
+\subsection{安全模型}
+\label{sec:security-model}
+
+本文构建IAQD的博弈化安全模型。认证共享密钥建立原语$\mathsf{KE}$需要满足密钥一致性、保密性和会话认证，分别以$\varepsilon_{\mathrm{cor}}^{\mathrm{KE}}$、$\varepsilon_{\mathrm{sec}}^{\mathrm{KE}}$和$\varepsilon_{\mathrm{auth}}^{\mathrm{KE}}$表示其失败参数，并记
+\begin{equation}
+\varepsilon_{\mathrm{KE}}\leq
+\varepsilon_{\mathrm{cor}}^{\mathrm{KE}}+
+\varepsilon_{\mathrm{sec}}^{\mathrm{KE}}+
+\varepsilon_{\mathrm{auth}}^{\mathrm{KE}}.
+\label{eq:ke-error}
+\end{equation}
+当采用可组合安全QKD实例化时，$\varepsilon_{\mathrm{KE}}$还应计入QKD经典通信的认证失败概率，不能仅由保密参数代替。记录MAC在经典查询接口下对量子多项式时间敌手满足不可伪造性\citep{wegman1981,boneh2013qmac}；消息确认PRF满足抗量子伪随机性\citep{zhandry2012qprf}；公平模式中的承诺对量子多项式时间敌手满足计算隐藏性和计算绑定性\citep{unruh2016commitment}。
+
+令$\Pi_P^s$表示参与方$P$的第$s$个协议实例，并定义伙伴标识
+\begin{equation}
+\mathsf{pid}=(\sid,ID_A,ID_B,\mathtt{params}).
+\label{eq:partner-id}
+\end{equation}
+两个实例具有相同的 \(\mathsf{pid}\) 且角色互补时，称为候选伙伴实例，该关系在初始化阶段即可确定。候选伙伴接受时还必须得到相同的 \(T_Q\)；该条件属于接受转录的一致性检查，不参与初始化伙伴匹配。隐私游戏的新鲜性按照候选伙伴关系判定。
+
+外部量子多项式时间敌手$\mathcal A$可以发起并发会话，并调用以下接口：$\mathsf{Execute}$返回一对诚实实例的公开转录和允许的量子侧信息；$\mathsf{Send}$向实例输入敌手选择的经典记录；$\mathsf{QuantumSend}$替换或修改输入量子寄存器；$\mathsf{Reveal}$返回已完成非挑战实例的会话密钥；$\mathsf{Corrupt}$返回参与方的长期秘密与当前本地状态。除$\mathsf{QuantumSend}$外，所有协议接口均按经典方式调用，敌手不能以量子叠加方式查询MAC或PRF计算接口。
+
+隐私游戏至多调用一次$\mathsf{Test}$。若挑战实例或其伙伴实例曾被调用$\mathsf{Reveal}$，或者任一挑战参与方在敌手输出猜测前被调用$\mathsf{Corrupt}$，则该挑战实例不新鲜。公平性游戏单独允许腐化Alice或Bob其中一方，被腐化参与方持有自身全部密钥与本地状态。符号$\negl(\kappa)$表示安全参数$\kappa$的可忽略函数。
+
+\begin{definition}[正确性]
+在$\mathsf{KE}$成功、诱骗检测通过、双方未被腐化且全部诚实经典记录被正确交付的条件下，若Alice未输出$B$、Bob未输出$A$或者任一确认标签未通过验证，则发生正确性失败。若该事件的概率至多为$\varepsilon_{\mathrm{corr}}$，则IAQD满足正确性。
+\end{definition}
+
+\begin{definition}[双向转录隐私]
+在挑战执行中，Alice实例以 \(A_b\) 为其发送消息，Bob实例以 \(B_b\) 为其发送消息。本定义仅刻画未腐化伙伴实例面对外部敌手时的转录隐私；对作为预期接收方的腐化参与者，不要求隐藏其按照协议功能应获得的对方消息。敌手选择两组等长消息对$(A_0,B_0)$和$(A_1,B_1)$。挑战者随机选择$b\in\{0,1\}$，通过$\mathsf{Test}$令一对新鲜伙伴实例执行$(A_b,B_b)$。敌手可以继续调用不破坏新鲜性的接口，并根据公开转录、接受或中止状态以及量子侧信息输出$b'$。其优势定义为
+\begin{equation}
+\Adv_{\prot}^{\mathrm{priv}}(\mathcal A)=
+\left|\Prb[b'=b]-\frac12\right|.
+\label{eq:privacyadv}
+\end{equation}
+若任意量子多项式时间敌手的优势均不超过$\negl(\kappa)$，则IAQD满足双向转录隐私。
+\end{definition}
+
+\begin{definition}[认证完整性与抗重放性]
+考虑任意未被腐化的接受实例，且其声称的发送方在相应记录生成前未被腐化。若该实例接受记录$x$，但不存在伙伴实例在同一会话、相反方向和相同序列号下生成完全相同的$x$，则敌手获胜；若同一实例对相同的会话标识、方向和序列号接受两次，敌手同样获胜。其获胜概率记为$\Adv_{\prot}^{\mathrm{auth}}(\mathcal A)$。若任意量子多项式时间敌手的获胜概率均不超过$\negl(\kappa)$，则IAQD满足认证完整性与抗重放性。该定义统一覆盖伪造、篡改、反射、跨会话替换和重放。
+\end{definition}
+
+\begin{definition}[$\lambda$-有界公平性]
+本定义仅适用于公平模式。设双方消息等长并采用相同的分块规则，考虑敌手腐化Alice或Bob其中一方而另一方保持诚实。令$L_A(t)$表示时刻$t$时Alice根据已经验证的$R_B$开放块能够确定恢复的Bob消息比特数，$L_B(t)$对称定义；尚未验证的开放块以及通过猜测获得的比特均不计入。若对任意恶意合法参与方均有
+\begin{equation}
+\Prb\!\left[\max_t|L_A(t)-L_B(t)|>\lambda\right]
+\leq\negl(\kappa),
+\label{eq:fairdef}
+\end{equation}
+则IAQD公平模式满足$\lambda$-有界公平性。
+\end{definition}
+
+上述安全游戏共同构成IAQD的博弈化安全模型。第~\ref{sec:security}节将在这些定义和组件假设下给出密码学归约与数学证明。
+
+
+
+
+
+\section{IAQD安全性分析}
+\label{sec:security}
+
+本章基于第~\ref{sec:security-model}节建立的博弈化安全模型，在下述量子分发与密码组件假设下，分析IAQD的正确性、双向转录隐私、认证完整性、抗重放性和$\lambda$-有界公平性。正确性通过协议代数关系证明；转录隐私与认证安全通过混合游戏和密码学归约给出条件性安全上界；$\lambda$-有界公平性通过事件前缀归纳证明。最后，Qiskit仿真和概率模型检验用于复核量子线路、概率公式与所构造的有限状态行为。
+
+本章所有攻击者均为量子多项式时间敌手，并遵守第~\ref{sec:security-model}节的新鲜性限制。记$\varepsilon_{\mathrm{KE}}$为真实$\mathsf{KE}$与理想认证共享密钥之间的区分上界，$\varepsilon_{\mathrm{QDist}}$为已接受量子分发视图偏离理想消息无关视图的上界，$\varepsilon_{\mathrm{PRF}}$为消息确认函数的伪随机区分上界，$\varepsilon_{\mathrm{MAC}}$为记录伪造上界。公平模式中，$\varepsilon_{\mathrm{com}}^{\mathrm{hid}}$和$\varepsilon_{\mathrm{com}}^{\mathrm{bind}}$分别表示承诺隐藏性和绑定性的失败上界；$P_{\mathrm{und}}$表示有害量子修改通过诱骗检测的概率，$P_{\mathrm{nonce}}$表示随机数重复或会话哈希碰撞的概率。上述参数均针对完整安全实验计数，不再另乘查询次数。
+
+\begin{remark}[安全范围]
+本文未针对六粒子簇态分发过程在一般相干攻击下推导具体的
+$\varepsilon_{\mathrm{QDist}}$。该参数作为量子分发层的外部假设输入，
+用于上界协议接受后真实量子分发视图与理想消息无关视图之间的区分优势。
+因此，下述涉及$\varepsilon_{\mathrm{QDist}}$的结论均为在所列量子分发
+与密码组件假设成立时的条件性博弈安全界，而不是一般量子攻击下的
+无条件物理层安全证明。
+\end{remark}
+
+\subsection{正确性分析}
+
+本节对应第~\ref{sec:security-model}节的正确性定义，证明诚实伙伴实例完整执行协议时能够正确恢复对方消息。
+
+\begin{theorem}[诚实执行正确性]
+设$\varepsilon_{\mathrm{QCorr}}$为量子分发被接受后仍发生错误解码的概率，$\varepsilon_{\mathrm{impl}}$为本地制备、门操作和测量的实现失败概率。若经典密码算法具有正确性，则
+\begin{equation}
+\Prb[\mathsf{CorrFail}]
+\leq \varepsilon_{\mathrm{cor}}^{\mathrm{KE}}
++\varepsilon_{\mathrm{QCorr}}+\varepsilon_{\mathrm{impl}}.
+\label{eq:corrbound}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+排除式~\eqref{eq:corrbound}右侧三个失败事件后，双方获得相同的$K_S$，且通过检测的簇态满足式~\eqref{eq:phi1}--\eqref{eq:phi2}的关联。Pauli操作置换相应Bell标签，故每个消息块满足
+\[
+b_i=M_{B,i}\oplus\widetilde M_{B,i},
+\qquad
+a_i=M_{A,i}\oplus\widetilde M_{A,i}.
+\]
+基础模式中$K_P^{\mathrm{otp}}$在加解密时抵消；公平模式全部开放后，$R_P$同样抵消。伙伴实例具有相同的$\sid$、$T_Q$、密文和恢复消息，因此式~\eqref{eq:confirmation}中的确认标签验证通过。由并合界得到式~\eqref{eq:corrbound}。
+\end{proof}
+
+\subsection{基于混合游戏的转录隐私}
+
+本节针对第~\ref{sec:security-model}节定义的双向转录隐私游戏，通过混合游戏序列证明IAQD的转录隐私上界。
+
+传输粒子$S_3,S_4$在任何一方编码秘密消息前已经完成分发，故在诚实制备条件下，量子分发视图与消息取值无关。对于独立且误码率固定的检测模型，主动修改的漏检概率可由相应有限样本界约束；对于一般相干攻击，协议接受后真实量子视图相对于理想消息无关视图的偏差不在本文中具体推导，而统一封装为条件参数$\varepsilon_{\mathrm{QDist}}$。分发完成后，消息相关信息仅通过受保护的经典记录和带密钥确认离开参与方实验室。
+
+\begin{theorem}[条件性转录隐私上界]
+假设已接受量子分发中的真实敌手视图与理想消息无关视图之间的区分优势至多为
+$\varepsilon_{\mathrm{QDist}}$，真实$\mathsf{KE}$与理想认证共享密钥之间的
+区分优势至多为$\varepsilon_{\mathrm{KE}}$，且消息确认函数的抗量子伪随机
+区分优势至多为$\varepsilon_{\mathrm{PRF}}$。则对任意满足新鲜性限制的
+量子多项式时间敌手$\mathcal A$，IAQD基础模式满足
+\begin{equation}
+\begin{aligned}
+\Adv_{\prot}^{\mathrm{priv}}(\mathcal A)
+&\leq \varepsilon_{\mathrm{QDist}}
++\varepsilon_{\mathrm{KE}}\\
+&\quad+\varepsilon_{\mathrm{PRF}}.
+\end{aligned}
+\label{eq:privacybound}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+令$\Adv_i$表示敌手在游戏$G_i$中的隐私优势。
+
+$G_0$为真实隐私游戏。挑战实例及其伙伴保持新鲜，即二者均未被查询$\mathsf{Reveal}$，且挑战双方在敌手输出猜测前未被查询$\mathsf{Corrupt}$；非挑战会话仍允许敌手调用安全模型规定的接口。
+
+$G_1$将已接受量子分发中的敌手视图替换为仅依赖公开参数和检测结果的理想消息无关视图。由$\varepsilon_{\mathrm{QDist}}$的定义，
+\begin{equation}
+|\Adv_0-\Adv_1|
+\leq\varepsilon_{\mathrm{QDist}}.
+\label{eq:hybrid-qdist}
+\end{equation}
+
+$G_2$将挑战伙伴实例共享的真实$\mathsf{KE}$输出替换为同一理想均匀密钥$K_S$，再按式~\eqref{eq:keys}解析为互不重叠的子密钥。由于$K_S$均匀，各子串在分布上相互独立。由$\mathsf{KE}$的安全性，
+\begin{equation}
+|\Adv_1-\Adv_2|
+\leq\varepsilon_{\mathrm{KE}}.
+\label{eq:hybrid-ke}
+\end{equation}
+此时$K_P^{\mathrm{otp}}$均匀且只使用一次，故$C_A,C_B$与等长挑战消息独立。
+
+$G_3$将挑战会话的消息确认PRF替换为随机函数。由PRF的抗量子伪随机性\citep{zhandry2012qprf}，
+\begin{equation}
+|\Adv_2-\Adv_3|
+\leq\varepsilon_{\mathrm{PRF}}.
+\label{eq:hybrid-prf}
+\end{equation}
+在$G_3$中，公开密文、记录标签和确认标签的联合分布均与挑战位$b$无关，因此$\Adv_3=0$。结合式~\eqref{eq:hybrid-qdist}--\eqref{eq:hybrid-prf}并使用三角不等式，得到式~\eqref{eq:privacybound}。
+\end{proof}
+
+如第~\ref{sec:hash-leak}节所示，公开消息摘要不能实现转录隐私。记录认证的不可伪造性由$\varepsilon_{\mathrm{MAC}}$刻画，消息确认的伪随机性由$\varepsilon_{\mathrm{PRF}}$刻画。上述隐私定义不要求协议对已腐化接收方隐藏其按功能应获得的消息。
+
+\subsection{认证、抗重放与量子传输检测}
+
+本节针对第~\ref{sec:security-model}节定义的认证完整性与抗重放游戏，分析经典记录伪造、重放以及量子信道修改造成的安全风险。
+
+IAQD要求接收方在诱骗粒子位置和制备基公开前发送认证接收确认。因此，外部敌手必须在未知诱骗映射的情况下实施截获、替换或纠缠操作。记$P_{\mathrm{und}}(\ell,q_{\mathrm{th}})$为有害量子修改通过诱骗检测的概率，$\varepsilon_{\mathrm{QDist}}$为协议接受后真实量子视图与理想消息无关视图之间的区分上界。
+
+\begin{theorem}[认证与量子修改检测上界]
+对任意量子多项式时间敌手$\mathcal A$和任意新鲜会话，IAQD的经典记录认证优势满足
+\begin{equation}
+\Adv_{\prot}^{\mathrm{auth}}(\mathcal A)
+\leq
+\varepsilon_{\mathrm{KE}}
++\varepsilon_{\mathrm{MAC}}
++P_{\mathrm{nonce}}.
+\label{eq:authbound}
+\end{equation}
+进一步，若$\mathsf{BadQ}$表示有害量子修改通过诱骗检测，则
+\begin{equation}
+\Prb[\mathsf{BadQ}]
+\leq
+P_{\mathrm{und}}(\ell,q_{\mathrm{th}}).
+\label{eq:quantum-undetected}
+\end{equation}
+因此，经典记录伪造或有害量子修改至少一项发生的端到端失败概率至多为
+\begin{equation}
+\varepsilon_{\mathrm{KE}}
++\varepsilon_{\mathrm{MAC}}
++P_{\mathrm{nonce}}
++P_{\mathrm{und}}(\ell,q_{\mathrm{th}}).
+\label{eq:end-to-end-auth}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+令$H_0$为真实认证游戏，$H_1$将目标会话的$\mathsf{KE}$输出替换为理想均匀密钥。由认证密钥建立原语的安全性，
+\begin{equation}
+\left|
+\Adv_{H_0}-\Adv_{H_1}
+\right|
+\leq
+\varepsilon_{\mathrm{KE}}.
+\label{eq:auth-hybrid-ke}
+\end{equation}
+
+在$H_1$中，若未腐化实例接受一条并非由其伙伴实例生成的新记录，则敌手构造了有效MAC伪造，该事件的概率由$\varepsilon_{\mathrm{MAC}}$上界。若敌手重放或迁移旧记录，会话标识、通信方向和递增序列号将使该记录被拒绝；只有随机数重复或会话哈希碰撞时可能绕过检查，其概率由$P_{\mathrm{nonce}}$上界。因此，
+\[
+\Adv_{H_1}
+\leq
+\varepsilon_{\mathrm{MAC}}+P_{\mathrm{nonce}}.
+\]
+结合式~\eqref{eq:auth-hybrid-ke}即可得到式~\eqref{eq:authbound}。
+
+对于量子信道，敌手必须在诱骗信息公开前完成量子操作。其有害修改通过检测的概率由$P_{\mathrm{und}}(\ell,q_{\mathrm{th}})$定义，故式~\eqref{eq:quantum-undetected}成立。最后对经典认证失败事件和量子修改漏检事件使用并合界，得到式~\eqref{eq:end-to-end-auth}。
+\end{proof}
+
+在第~\ref{sec:imr-correction}节定义的攻击模型下，无噪声、全量随机基IMR和随机态替换的漏检概率分别为$(3/4)^{2\ell}$和$(1/2)^{2\ell}$，具体推导见式~\eqref{eq:imr}和式~\eqref{eq:replace}。
+
+\textbf{独立误码假设。}
+在阈值检测下，设$L=2\ell$个错误指示变量$X_i\in\{0,1\}$相互独立，且$\mathbb E[X_i]=q_1>q_{\mathrm{th}}$。令$\widehat q=L^{-1}\sum_{i=1}^{L}X_i$，由Hoeffding不等式\citep{hoeffding1963}可得
+\begin{equation}
+P_{\mathrm{und}}(\ell,q_{\mathrm{th}})
+\leq
+\exp\!\left[-2L(q_1-q_{\mathrm{th}})^2\right].
+\label{eq:hoeffding}
+\end{equation}
+
+该界仅适用于独立且误码率固定的检测模型；对相关误码或相干攻击，应采用与设备及抽样方法匹配的有限密钥分析。
+
+第~\ref{sec:em-gap}节给出了特定EM探针的信息--扰动关系。一般量子攻击对协议接受后量子视图的影响统一计入$\varepsilon_{\mathrm{QDist}}$，并作为转录隐私归约的条件参数。
+
+\subsection{$\lambda$-有界公平性}
+
+本节针对第~\ref{sec:security-model}节定义的$\lambda$-有界公平性，通过事件前缀归纳证明公平模式对中止信息优势的限制。
+
+令$\mathsf{Good}_{\mathrm{base}}$表示认证密钥建立未失败，且诚实实例未接受伪造、重放或跨会话记录。由前述认证上界，
+\begin{equation}
+\Prb[\neg\mathsf{Good}_{\mathrm{base}}]
+\leq \varepsilon_{\mathrm{KE}}
++\varepsilon_{\mathrm{MAC}}+P_{\mathrm{nonce}}.
+\label{eq:good-base}
+\end{equation}
+
+\begin{theorem}[渐进释放上界]
+在公平模式下，设承诺对量子多项式时间敌手满足计算隐藏性和绑定性，协议状态机要求参与方验证对方当前开放后才进入下一状态，且每块长度不超过$\lambda$。则对腐化Alice或Bob其中一方的任意量子多项式时间敌手，在$\mathsf{Good}_{\mathrm{base}}$成立的条件下，
+\begin{equation}
+\begin{aligned}
+&\Prb\!\left[
+\max_t |L_A(t)-L_B(t)|>\lambda
+\,\middle|\,\mathsf{Good}_{\mathrm{base}}
+\right]\\
+&\quad\leq
+\varepsilon_{\mathrm{com}}^{\mathrm{hid}}
++\varepsilon_{\mathrm{com}}^{\mathrm{bind}}.
+\end{aligned}
+\label{eq:fairbound}
+\end{equation}
+不加条件时，总公平违规概率满足
+\begin{equation}
+\begin{aligned}
+\Prb\!\left[\max_t|L_A(t)-L_B(t)|>\lambda\right]
+&\leq \varepsilon_{\mathrm{KE}}+\varepsilon_{\mathrm{MAC}}
++P_{\mathrm{nonce}}\\
+&\quad+\varepsilon_{\mathrm{com}}^{\mathrm{hid}}
++\varepsilon_{\mathrm{com}}^{\mathrm{bind}}.
+\end{aligned}
+\label{eq:fairbound-total}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+在$\mathsf{Good}_{\mathrm{base}}$条件下，进一步排除承诺隐藏性和绑定性失败事件。开放开始前，计算隐藏性使任意有效敌手不能由承诺恢复对方尚未开放的掩码块，故$L_A=L_B=0$。假设第$j$轮开始时双方已验证的对端掩码位数相等。该轮第一块被验证后，接收方最多领先一个块，即不超过$\lambda$位；第二块被验证后，两者重新相等。
+
+协议状态机在未验证当前开放时不会推进，因此中止只能发生在轮前、半轮或轮后，三种情况下的信息差分别为$0$、至多$\lambda$和$0$。由事件前缀归纳，任意执行前缀均满足
+\[
+|L_A(t)-L_B(t)|\leq\lambda.
+\]
+敌手若通过不一致开放改变该结论，则破坏承诺绑定性；若在开放前恢复掩码，则破坏承诺隐藏性。由并合界得到式~\eqref{eq:fairbound}；再结合式~\eqref{eq:good-base}，得到式~\eqref{eq:fairbound-total}。
+\end{proof}
+
+该定理度量可恢复比特数，而不是消息的语义价值。若少数比特承载高价值指令，即使$\lambda=1$也可能不可接受。应用层可采用随机化表示或全有全无变换；要求强公平时仍需可信第三方或其他附加假设。
+
+\subsection{仿真与模型检验}
+
+前述安全结论来自博弈归约和事件前缀归纳。本节使用Qiskit\citep{qiskit2024}、Monte Carlo、PRISM\citep{prism2011}中的DTMC/MDP以及消融实验，从量子线路、概率过程和协议状态机三个层面复核前述分析。
+
+\subsubsection{量子核心正确性与噪声}
+
+本文在理想无噪声条件下，对两类六粒子簇态及16组双向消息组合进行验证，共构造32条显式量子线路。评价指标包括簇态制备保真度、Bell标签恢复正确性和双向消息解码成功概率。状态向量仿真中，最低制备保真度和最低双向解码成功概率均近似为1；相对于理论值1，二者的绝对误差分别为$2.2\times10^{-15}$和$2.6\times10^{-15}$。对128个非零Bell测量分支逐一检验后，其标签恢复和消息解码结果均与理论映射一致。此外，上述32条线路均执行8192次测量抽样，未观察到解码错误。
+
+噪声实验分别对比特翻转、相位翻转、退极化、幅度阻尼和相位阻尼信道，在传输与存储两个位置扫描
+\[
+p\in\{0,0.01,0.02,0.05,0.10,0.15,0.20\},
+\]
+共形成2240条配置记录。以$p=0.10$为例，传输退极化信道下的接受率为$0.8575$，存储幅度阻尼信道下的诚实误中止率为$0.1855$。上述结果刻画了IAQD在所设五类标准噪声模型下的运行特征。
+
+\subsubsection{DTMC随机过程分析}
+
+DTMC描述转移概率已经固定的随机事件，包括测量结果、随机基IMR、独立信道噪声和阈值判定。模型状态定义为
+\begin{equation}
+s_D=(q,n_{\mathrm{test}},n_{\mathrm{err}},a,o),
+\label{eq:dtmc-state}
+\end{equation}
+其中$q$表示协议阶段，$n_{\mathrm{test}}$和$n_{\mathrm{err}}$分别表示已检测粒子数和错误数，$a$表示接受或中止状态，$o$表示终止结果。本文计算以下可达概率：
+\begin{equation}
+\begin{aligned}
+p_{\mathrm{UA}}
+&=\Prb[\mathbf F\,\mathsf{UnsafeAccept}],\\
+p_{\mathrm{SA}}
+&=\Prb[\mathbf F\,\mathsf{SafeAbort}],\\
+p_{\mathrm{S}}
+&=\Prb[\mathbf F\,\mathsf{Success}].
+\end{aligned}
+\label{eq:dtmc-properties}
+\end{equation}
+
+实验覆盖
+\[
+L\in\{16,32,64,128\},
+\quad
+q_0\in\{0,0.01,0.03,0.05\},
+\]
+攻击叠加信道后的总误码率取$q_1=0.20$，检测阈值取
+\[
+q_{\mathrm{th}}\in\{0.05,0.10,0.15\},
+\]
+共形成48组DTMC。PRISM结果与二项分布解析值的最大绝对误差为$8.88\times10^{-16}$，Monte Carlo结果与解析值的最大绝对误差为$3.22\times10^{-4}$。在$q_0=0$的12组边界配置中，诚实接受率的解析值、PRISM值和3600万次事件级抽样结果均为$1$。图~\ref{fig:e6-threshold}给出了$L=32$时检测阈值对诚实误中止率与攻击漏检率的影响。
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]
+  {figures/e6_threshold_tradeoff_v6.pdf}
+  \caption{$L=32$时QBER阈值对诚实误中止率与攻击漏检率的影响。}
+  \label{fig:e6-threshold}
+\end{figure}
+
+\subsubsection{MDP最坏调度与有界公平}
+
+MDP将信道和测量表示为概率转移，将恶意参与方的继续、中止、重放、延迟、乱序和选择性开放表示为非确定性动作。模型状态进一步记录已验证释放量$L_A,L_B$、方向序列号和接收状态。原AQD的提前中止MDP已在第3章复现；本节计算IAQD公平模式在所有调度器下发生公平违规的最大可达概率：
+\begin{equation}
+p_{\mathrm{viol}}^{\max}
+=
+\sup_{\sigma\in\Sigma}
+\Prb_{\sigma}\!\left[
+\mathbf F\bigl(|L_A-L_B|>\lambda\bigr)
+\right],
+\label{eq:mdp-properties}
+\end{equation}
+其中$\Sigma$表示MDP的全部可行调度器集合。
+
+MDP覆盖消息长度
+\[
+m\in\{8,16,32\},
+\qquad
+\lambda\in\{1,2,4,8\},
+\]
+并考虑两种腐化方和两种初始领先方，共形成48组配置和944个逐层查询。全部配置的公平违规最大概率均为$0$；总体最大可达信息领先为8 bit，该结果出现在$\lambda=8$的配置中；其余配置的领先量均未超过对应的$\lambda$。在所考察的全部参数配置中，MDP结果均与事件前缀归纳得到的
+$\lambda$-有界公平性结论一致。
+
+\subsubsection{认证转录和消融测试}
+
+参考执行器生成合法记录后，系统地实施重放、重复、反射、跨会话替换、参数降级、乱序、负载篡改和诱骗信息提前公开。完整IAQD拒绝全部42个预设攻击实例；删除相应会话绑定或认证组件后，9个消融版本均出现错误接受反例。记$\tau_{\mathrm{tag}}$为截断MAC标签长度，短标签的经验伪造率与理论值$2^{-\tau_{\mathrm{tag}}}$一致；对于128-bit标签，其理论伪造上界为$2^{-128}\approx2.94\times10^{-39}$。
+
+
+
+\section{资源计算与结论}
+\label{sec:discussion}
+
+原AQD协议存在转录隐私泄露和内部参与方提前中止等可执行攻击，其密钥派生及量子攻击检测论证也存在证明缺口。上述结果表明，量子信道安全不能替代经典转录、认证上下文和消息发布时序的安全设计。
+
+原AQD需要制备$6n+2\ell$个量子比特、传输$2n+2\ell$个量子比特、保存$4n$个量子比特并完成$6n+2\ell$次测量，其上层协议共需5轮通信。
+
+针对上述问题，本文提出IAQD并构建博弈化安全模型，对转录隐私、认证完整性、抗重放性和$\lambda$-有界公平性给出明确的安全游戏定义。在所列认证密钥建立、记录MAC、消息确认PRF、承诺方案以及量子分发层假设（包括$\varepsilon_{\mathrm{QDist}}$上界）成立的条件下，本文通过混合游戏、认证归约和事件前缀归纳给出了相应的条件性安全上界。
+
+在不计外部$\mathsf{KE}$/QKD组件的情况下，IAQD与原AQD具有相同的在线量子资源。基础模式保持5轮上层通信，公平模式需要$6+r$轮，并以额外的经典认证、承诺和开放记录换取$\lambda$-有界公平性，具体比较见表~\ref{tab:resource-comparison}。
+
+\begin{table}[t]
+\centering
+\caption{原AQD与IAQD的资源比较（$n=32$，$\ell=4$，$\lambda=4$）}
+\label{tab:resource-comparison}
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\columnwidth}{@{}Xccc@{}}
+\toprule
+指标 & 原AQD & \shortstack{IAQD\\基础} & \shortstack{IAQD\\公平} \\
+\midrule
+量子比特（制/传/存）
+& $200/72/128$ & $200/72/128$ & $200/72/128$ \\
+测量
+& 200 & 200 & 200 \\
+上层轮次
+& 5 & 5 & 22 \\
+经典通信（bit）
+& 944 & 2748 & 28220 \\
+认证操作
+& -- & 12 & 80 \\
+序列化报文（B）
+& -- & 5640 & 64238 \\
+运行时间（ms）
+& -- & 19.87 & 133.84 \\
+\bottomrule
+\end{tabularx}
+\vspace{1pt}
+\parbox{\columnwidth}{\scriptsize
+注：``--''表示无同口径数据；统计不含$\mathsf{KE}$/QKD实例开销。}
+\end{table}
+
+综上，本文揭示并验证了原AQD协议的安全问题，提出IAQD并建立相应的博弈化安全模型。IAQD保持原协议的在线量子资源，并在明确的组件假设下提供转录隐私、认证完整性、抗重放性和可选的$\lambda$-有界公平性，可为量子双向保密通信提供设计参考。
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

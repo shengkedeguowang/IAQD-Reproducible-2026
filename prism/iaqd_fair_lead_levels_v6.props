@@ -1,0 +1,2 @@
+const int k;
+Pmax=? [ F ((L_A>L_B ? L_A-L_B : L_B-L_A)>=k) ]

@@ -1,0 +1,3 @@
+﻿cluster_state,stabilizer_generators,num_qubits,single_qubit_gates,two_qubit_gates,depth,preparation_fidelity,maximum_aligned_amplitude_error,forbidden_state_injection
+phi1,-IIIIYY +YYIIII -IIIZXZ +IIXYIY +IYYZII +XZXIII,6,27,22,27,0.9999999999999978,1.1113714042552588e-16,False
+phi2,+IIIIYY +YYIIII +IIIZXZ -IIXYIY +IYYZII +XZXIII,6,26,22,27,0.9999999999999978,1.1113714042552588e-16,False

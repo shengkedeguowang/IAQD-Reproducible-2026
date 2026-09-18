@@ -1,0 +1,2 @@
+Pmax=? [ F (terminal & timed_out & aborted_by_alice & AliceKnowsB & !BobKnowsA) ]
+Pmax=? [ F (terminal & OutA_has_B & OutB_abort) ]

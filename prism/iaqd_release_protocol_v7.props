@@ -1,0 +1,14 @@
+// IAQD-MODEL-V7 properties. Property 1 is the revised one-sided definition.
+// Exact maxima of sent_honest-verified_peer and max_gap are computed directly
+// from PRISM's explicit reachable-state export. This avoids cumulative rewards;
+// PRISM 4.10.1 does not implement filter(max,...) for exact models.
+Pmax=? [ F (sent_honest > verified_peer + LAMBDA) ]
+Pmax=? [ F "release_reached" ]
+Pmax=? [ F "completed" ]
+Pmax=? [ F "honest_complete" ]
+Pmax=? [ F "rejected" ]
+Pmax=? [ F "aborted" ]
+Pmax=? [ F "waiting" ]
+Pmin=? [ F "terminated" ]
+Pmax=? [ F "unexpected_terminal" ]
+Pmax=? [ F (last_event=14) ]

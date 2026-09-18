@@ -1,0 +1,2 @@
+Pmax=? [ F (!terminal & BobWaitingForCA & AliceKnowsB & !BobKnowsA & !OutB_abort) ]
+Pmax=? [ F (terminal & OutB_abort) ]

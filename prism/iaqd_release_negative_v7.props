@@ -1,0 +1,3 @@
+// Monitor/negative-control query. Run with VARIANT=1 and VARIANT=2 separately.
+// Exact maxima are computed from PRISM's explicit reachable-state export.
+Pmax=? [ F (sent_honest > verified_peer + LAMBDA) ]

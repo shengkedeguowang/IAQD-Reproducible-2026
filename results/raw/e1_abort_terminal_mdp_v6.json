@@ -1,0 +1,146 @@
+{
+  "properties": [
+    "Pmax=? [ F (terminal & aborted_by_alice & AliceKnowsB & !BobKnowsA) ]",
+    "Pmax=? [ F (terminal & OutA_has_B & OutB_abort) ]"
+  ],
+  "initial_condition": {
+    "phase": "t3",
+    "Pass_decoy": true
+  },
+  "shortest_transition_count": 6,
+  "required_actions": [
+    "send_cb",
+    "alice_recovers_b",
+    "alice_abort",
+    "bob_waiting_for_ca",
+    "timeout",
+    "bob_abort"
+  ],
+  "trace": [
+    {
+      "state": {
+        "phase": 3,
+        "Pass_decoy": true,
+        "AliceKnowsB": false,
+        "BobKnowsA": false,
+        "aborted_by_alice": false,
+        "terminal": false,
+        "OutA_has_B": false,
+        "OutB_abort": false,
+        "BobWaitingForCA": false,
+        "timed_out": false
+      }
+    },
+    {
+      "action": "send_cb",
+      "state": {
+        "phase": 5,
+        "Pass_decoy": true,
+        "AliceKnowsB": false,
+        "BobKnowsA": false,
+        "aborted_by_alice": false,
+        "terminal": false,
+        "OutA_has_B": false,
+        "OutB_abort": false,
+        "BobWaitingForCA": false,
+        "timed_out": false
+      }
+    },
+    {
+      "action": "alice_recovers_b",
+      "state": {
+        "phase": 6,
+        "Pass_decoy": true,
+        "AliceKnowsB": true,
+        "BobKnowsA": false,
+        "aborted_by_alice": false,
+        "terminal": false,
+        "OutA_has_B": true,
+        "OutB_abort": false,
+        "BobWaitingForCA": false,
+        "timed_out": false
+      }
+    },
+    {
+      "action": "alice_abort",
+      "state": {
+        "phase": 7,
+        "Pass_decoy": true,
+        "AliceKnowsB": true,
+        "BobKnowsA": false,
+        "aborted_by_alice": true,
+        "terminal": false,
+        "OutA_has_B": true,
+        "OutB_abort": false,
+        "BobWaitingForCA": false,
+        "timed_out": false
+      }
+    },
+    {
+      "action": "bob_waiting_for_ca",
+      "state": {
+        "phase": 8,
+        "Pass_decoy": true,
+        "AliceKnowsB": true,
+        "BobKnowsA": false,
+        "aborted_by_alice": true,
+        "terminal": false,
+        "OutA_has_B": true,
+        "OutB_abort": false,
+        "BobWaitingForCA": true,
+        "timed_out": false
+      }
+    },
+    {
+      "action": "timeout",
+      "state": {
+        "phase": 9,
+        "Pass_decoy": true,
+        "AliceKnowsB": true,
+        "BobKnowsA": false,
+        "aborted_by_alice": true,
+        "terminal": false,
+        "OutA_has_B": true,
+        "OutB_abort": false,
+        "BobWaitingForCA": true,
+        "timed_out": true
+      }
+    },
+    {
+      "action": "bob_abort",
+      "state": {
+        "phase": 10,
+        "Pass_decoy": true,
+        "AliceKnowsB": true,
+        "BobKnowsA": false,
+        "aborted_by_alice": true,
+        "terminal": true,
+        "OutA_has_B": true,
+        "OutB_abort": true,
+        "BobWaitingForCA": true,
+        "timed_out": true
+      }
+    }
+  ],
+  "prism_terminal_knowledge_property": {
+    "result": 1.0,
+    "states": 9,
+    "transitions": 11,
+    "construction_seconds": 0.022,
+    "checking_seconds": 0.01,
+    "wall_seconds": 1.489169100066647,
+    "command": "D:\\prism-wrapper\\prism.bat C:\\Users\\shenk\\Documents\\论文写作\\output\\latex\\AQD_密码分析与改进_中文投稿版_v3.1_版式修正版\\AQD_E1-E7_实验交付包_v6_20260830\\prism\\original_aqd_abort_terminal_v6.nm C:\\Users\\shenk\\Documents\\论文写作\\output\\latex\\AQD_密码分析与改进_中文投稿版_v3.1_版式修正版\\AQD_E1-E7_实验交付包_v6_20260830\\prism\\original_aqd_abort_terminal_v6.props -prop 1 -exportstrat C:\\Users\\shenk\\AppData\\Local\\Temp\\aqd_v6_790ca746a197_strategy.txt -exportstates C:\\Users\\shenk\\AppData\\Local\\Temp\\aqd_v6_a4f4e9c928c8_states.txt -exporttrans C:\\Users\\shenk\\AppData\\Local\\Temp\\aqd_v6_2a5f9868758c_transitions.txt",
+    "returncode": 0
+  },
+  "prism_terminal_output_property": {
+    "result": 1.0,
+    "states": 9,
+    "transitions": 11,
+    "construction_seconds": 0.021,
+    "checking_seconds": 0.002,
+    "wall_seconds": 0.4698606999590993,
+    "command": "D:\\prism-wrapper\\prism.bat C:\\Users\\shenk\\Documents\\论文写作\\output\\latex\\AQD_密码分析与改进_中文投稿版_v3.1_版式修正版\\AQD_E1-E7_实验交付包_v6_20260830\\prism\\original_aqd_abort_terminal_v6.nm C:\\Users\\shenk\\Documents\\论文写作\\output\\latex\\AQD_密码分析与改进_中文投稿版_v3.1_版式修正版\\AQD_E1-E7_实验交付包_v6_20260830\\prism\\original_aqd_abort_terminal_v6.props -prop 2",
+    "returncode": 0
+  },
+  "interpretation": "Alice's abort is nonterminal; only the explicit timeout followed by bob_abort creates terminal output failure."
+}

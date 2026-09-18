@@ -1,0 +1,6 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E2,random_basis_imr_L16_f1,,detection_probability,0.9898606666666667,0.989746672691246,0.9899734061239743,probability,complete,37563f83a07e62f1f304cb143c10157f99edb98f5a5d4e84aa00fb9c91244a24,Event-level BB84 particle simulation; analytic formula is a separate reference.
+E2,random_replacement_L16_f1,,detection_probability,0.9999823333333333,0.999976894011972,0.9999864922153046,probability,complete,37563f83a07e62f1f304cb143c10157f99edb98f5a5d4e84aa00fb9c91244a24,
+E2,all_observable_configurations,,maximum_absolute_error,0.0007061304517927969,,,probability,complete,e28a96ca8af27485d3fb481ef10c312d2ce62657bceff7fa5ca6b6e5f86c9ff4,
+E2,single_particle_random_basis_f1,,pass_probability,0.7505533333333333,,,probability,complete,37563f83a07e62f1f304cb143c10157f99edb98f5a5d4e84aa00fb9c91244a24,Expected 3/4.
+E2,single_particle_random_replacement_f1,,pass_probability,0.5024433333333334,,,probability,complete,37563f83a07e62f1f304cb143c10157f99edb98f5a5d4e84aa00fb9c91244a24,Expected 1/2.

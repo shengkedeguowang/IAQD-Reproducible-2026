@@ -1,0 +1,9 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E5,complete_IAQD,,honest_transcript_acceptance,1,,,boolean,complete,8adb18883eea97725e3c78bdb66c141e42f8b2600dae5911bd8d991052538d8b,
+E5,complete_IAQD,,registered_attacks_rejected,42,,,attacks,complete,389988448100fe0084398afcd0ba0fe61c792bfca5e891e161b8f6f1b132fe2d,
+E5,K_dist_decoy_authentication,,registered_K_dist_attacks_rejected,7,,,attacks,complete,389988448100fe0084398afcd0ba0fe61c792bfca5e891e161b8f6f1b132fe2d,tau_dist is independently generated and verified with K_dist; the generic outer record MAC remains separately classified as engineering hardening.
+E5,K_dist_ablation,,real_erroneous_acceptance_counterexample,1,,,counterexamples,complete,f4e57863c3ea45f6124d85b6a5d2db2a3b15f9ade88c5b57c503f59c4ae3375a,
+E5,ablations,,real_erroneous_acceptance_counterexamples,9,,,counterexamples,complete,f4e57863c3ea45f6124d85b6a5d2db2a3b15f9ade88c5b57c503f59c4ae3375a,
+E5,ablations,,NO_COUNTEREXAMPLE_WITHIN_BOUND,0,,,ablations,complete,f4e57863c3ea45f6124d85b6a5d2db2a3b15f9ade88c5b57c503f59c4ae3375a,A bounded non-finding would not imply general security.
+E5,confirmation_schema,,payload_fields,confirmation,,,,complete,8adb18883eea97725e3c78bdb66c141e42f8b2600dae5911bd8d991052538d8b,Online confirmation records carry no message field; gamma is recomputed from receiver-local recovery context.
+E5,MAC_128_bit,,analytic_single_attempt_upper_bound,2.938735877055719e-39,,,probability,complete,ac32e96214097141d6a70952e2b977c3e6e7e8e79cfed66ef298ab4afe9beaed,No 128-bit Monte Carlo was performed.

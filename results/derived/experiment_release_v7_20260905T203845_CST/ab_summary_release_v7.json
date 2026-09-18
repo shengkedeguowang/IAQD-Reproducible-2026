@@ -1,0 +1,50 @@
+{
+  "A": {
+    "hash_rows": 57,
+    "hash_sha256": "AF74C4A715BFE24FB358D36CCE3480E8A008E1DB3EABA35ECDC7EE481346CE21",
+    "no_timeout_prism_results": [
+      "1 (exact) (1.0)",
+      "0 (exact) (0.0)"
+    ],
+    "no_timeout_trace_steps": 4,
+    "terminal_prism_results": [
+      "1 (exact) (1.0)",
+      "1 (exact) (1.0)"
+    ],
+    "terminal_trace_steps": 6,
+    "trace_sha256": "DF35B5658FA08BD2C1852B62CF5789855E6E306317A86229D2DE12DFB538F123"
+  },
+  "B_EM": {
+    "density_sha256": "DF47A0C4B3DBA07E8E4308DAEC62D006799852D768E2900D8202DB33E895E3F6",
+    "deterministic_max_component_error": 2.498001805406602e-16,
+    "deterministic_rows": 101,
+    "historical_recompute_max_abs_error": 0.0,
+    "historical_rows_checked": 112,
+    "shot_rows": 25,
+    "shots_sha256": "47ABF243218DC15D361A49C0DC5798D4601B6C0A0F7A345B8C333CA95D41F37D"
+  },
+  "B_IMR": {
+    "aggregate_sha256": "6CD66820B4CDF08721279594993B54A209D3314B47EF9956B3A0318C6B364004",
+    "historical_max_formula_error": 0.0,
+    "historical_rows_checked": 2752,
+    "qiskit_rows": 8,
+    "qiskit_sha256": "3DFA077C639A1978607164514AD6DD7B2C051C9386E24511E1E92E5BFBA2E796",
+    "raw_sha256": "1BD69A56659D144BFC7FC75F028EA73A7BF285EA09356B5F5F870F2D37F9EB4A",
+    "regression_configurations": 24,
+    "regression_max_absolute_error": 0.0026358695482071592,
+    "regression_raw_rows": 120
+  },
+  "historical_checksum_audit": {
+    "rows": 7,
+    "sha256": "ED2753AB390E52E78C6A6A90491B0C0E456ECF6A7C4333AFD5AE526868187279",
+    "status_counts": {
+      "MATCH_ORIGINAL_DELIVERY": 7
+    }
+  },
+  "reuse_decision": {
+    "E1": "verified_reuse_candidate_plus_new_regression",
+    "E2": "verified_reuse_candidate_plus_new_regression",
+    "E3": "verified_reuse_candidate_plus_new_regression"
+  },
+  "scope": "A original-AQD deterministic regression plus B IMR/EM evidence audit"
+}

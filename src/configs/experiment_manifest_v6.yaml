@@ -1,0 +1,72 @@
+artifact_version: "AQD-E1-E7-V6-20260830"
+input_paths: "provided by command line; no user-specific absolute path is embedded in source"
+global:
+  independent_seeds: 30
+  confidence_level: 0.95
+  bernoulli_interval: wilson
+  multiple_testing_correction: holm
+  preserve_negative_results: true
+  simulation_replaces_proof: false
+  qiskit_is_real_hardware: false
+  ke_mode: ideal_test_fixture
+  kdf_instantiation: benchmark_reference_only
+  commitment_instantiation: benchmark_reference_only
+evidence_boundaries:
+  E1: deterministic_hash_attack_and_finite_abort_mdp
+  E2: event_level_bb84_attack_simulation_plus_analytic_reference
+  E3: specified_U_theta_probe_family_only
+  E4: explicit_six_qubit_clifford_circuits_and_reference_executor
+  E5: finite_two_layer_record_state_machine_only
+  E6: independent_error_dtmc_and_finite_protocol_mdp_only
+  E7: iaqd_upper_reference_executor_without_external_ke_cost
+semantic_profile:
+  sid_fields: [proto_ver, ID_A, ID_B, N_A, N_B, params]
+  qrecv_fields: [sid, ID_B, ID_A, recv, L3, L4]
+  qrecv_key: K_ack
+  decoy_auth_formula: tau_dist=MAC_K_dist(hdr_dist||D_decoy)
+  decoy_auth_key: K_dist
+  bell_direction_mapping: {S3_S4: [M_B, tilde_M_B], S5_S6: [M_A, tilde_M_A]}
+  message_relations: [B=M_B_xor_tilde_M_B, A=M_A_xor_tilde_M_A]
+  ciphertext_relations: [C_A=tilde_M_A_xor_K_A_otp, C_B=tilde_M_B_xor_K_B_otp]
+  transcript_lifecycle: [pre_quantum_context_digest, frozen_final_quantum_transcript_digest]
+  gamma_fields: [sid, role_label, locally_recovered_peer_message, ciphertext_a, ciphertext_b, quantum_transcript_digest]
+  confirmation_payload_fields: [confirmation]
+  outer_record_context: [ver, sid, sender, receiver, direction, type, seq, params, quantum_transcript_digest, payload]
+  fair_initial_leader: derive_from_sid
+  fair_round_order: alternate_leader_each_round
+  fair_commitment_form: unkeyed_hash_per_block_commitments_with_128_bit_salts
+  fair_commitment_secret_key: none
+  resource_rounds: {basic: 5, fair: 6+ceil(2*n_blocks/lambda_bits)}
+  one_way_record_count_is_not_round_count: true
+registered_parameters:
+  E2:
+    L: [8, 16, 24, 32, 64]
+    f: [0.10, 0.25, 0.50, 0.75, 1.00]
+    strategies: [random_replacement, random_basis_imr, fixed_z_imr, biased_basis_imr]
+  E3:
+    theta_interval: [0, pi_over_2]
+  E4:
+    states: [phi1, phi2]
+    logical_configurations: 32
+    exact_nonzero_branches: 128
+    shots_per_configuration: 8192
+  E5:
+    ablations: [no_sid, no_direction, no_sequence, no_receipt_ack, no_record_mac, no_keyed_confirmation, no_K_dist_validation, public_record_hash, public_message_hash_confirmation]
+  E6:
+    L: [16, 32, 64, 128]
+    q0: [0.00, 0.01, 0.03, 0.05]
+    q1: 0.20
+    qth: [0.05, 0.10, 0.15]
+    corrupted_parties: [alice, bob]
+    n_blocks: [4, 8, 16]
+    message_length_bits: [8, 16, 32]
+    lambda_bits: [1, 2, 4, 8]
+    initial_leaders: [alice, bob]
+    paper_main_dtmc_configurations: 48
+    paper_main_mdp_configurations: 48
+  E7:
+    resource_classes: [paper_analytic, reference_implementation_actual, external_ke_qkd]
+    ell_scenarios: [reference_ell_4, ideal_ell_155, threshold_derived]
+    performance_ell_values: [4, 155]
+    external_ke_scope: not_instantiated_external_primitive
+

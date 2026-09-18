@@ -1,0 +1,208 @@
+manifest_version: 1
+experiment_version: IAQD-EXP-REL-1
+run_id: experiment_release_v7_20260905T203845_CST
+frozen_at: 2026-09-05T20:49:05+08:00
+status: FROZEN_BEFORE_EXPERIMENTS
+
+scope:
+  purpose: "为 IAQD-REL-CAND-1 / IAQD-TH-CAND-1 / IAQD-EXEC-V7 生成可追溯实验数据"
+  no_paper_edit: true
+  no_protocol_or_theory_change: true
+  no_prism_model_edit: true
+  retain_failures: true
+  prohibition: "不按结果挑选种子、参数或失败；有限测试不表述为密码学证明"
+
+versions:
+  protocol: IAQD-REL-CAND-1
+  theory: IAQD-TH-CAND-1
+  executor: IAQD-EXEC-V7
+  release_model: IAQD-MODEL-V7-REL-1
+  theory_sha256: CE56F785C34F23F4364F7C8DA5244E8C63FC9EBAF131F3F6CA860A101CEE29C3
+  executor_sha256: BB2378E19F4C17A81610DCDFF10F935A9D20A2404092A5A48A01E4F1E4E185BE
+  release_model_sha256: 13BA83361E74EAB3B54A3713B6D1BBDFA6E7C5E46FD8AFB65AF6C575495E180A
+  release_properties_sha256: A33D05B3AB29888113DEB54FFD80E3AA9B296A2050EC78D0B2912A31B2553983
+  detection_model_sha256: CBB53234FBFB94C86EA034BE6A8BD1EA098183044D849569A5D9EA6C33189E60
+  detection_properties_sha256: 7EB3BDEE6AE456DCE52B8C2D1B3C5BD75938CC9817EC84F1893A741DC976E7BE
+
+paths:
+  workspace: "C:/Users/shenk/Documents/论文写作/IAQD_revision_release"
+  raw: results/raw/experiment_release_v7_20260905T203845_CST
+  derived: results/derived/experiment_release_v7_20260905T203845_CST
+  logs: reports/logs/experiment_release_v7_20260905T203845_CST
+  audit: reports/experiment_release_v7_20260905T203845_CST
+  environment: .experiment_env_v7
+
+environment:
+  python: "3.12.14 (MSC v.1944, 64 bit)"
+  numpy: 2.3.5
+  scipy: 1.18.1
+  pytest: 9.0.2
+  pyyaml: 6.0.3
+  qiskit: 2.5.2
+  qiskit_aer: 0.17.2
+  matplotlib: 3.10.8
+  prism: 4.10.1
+  java: 26.0.1
+  os: Windows-11-10.0.26100-SP0
+  cpu: "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel"
+  physical_cores: 14
+  logical_processors: 20
+  ram_bytes: 34029125632
+  timezone: Asia/Shanghai
+
+randomness:
+  seeds:
+    - 2026090501
+    - 2026090502
+    - 2026090503
+    - 2026090504
+    - 2026090505
+    - 2026090506
+    - 2026090507
+    - 2026090508
+    - 2026090509
+    - 2026090510
+  policy: "按列出的全部种子运行；不因结果替换、增加或删减种子"
+  v7_fixture_rng: "测试驱动按 seed 提供确定性 secrets 兼容对象；生产验证器接口和算法不变"
+
+statistics:
+  confidence_level: 0.95
+  bernoulli_interval: Wilson_score_two_sided
+  zero_count_reporting: "报告 Wilson 区间及单侧 95% Clopper-Pearson 上界，不写真实概率为0"
+  deterministic_checks: "精确值/穷举/模型检查不附加Monte Carlo置信区间"
+  aggregation: "先保留逐种子计数，再对全部预定种子合并；不删除失败行"
+  numerical_tolerance:
+    statevector_amplitude_abs: 1.0e-12
+    probability_abs: 1.0e-12
+    prism_analytic_abs: 1.0e-12
+  prism_engine:
+    detection: "PRISM exact rational evaluation (-exact), default explicit construction"
+    release: "复用已核验 IAQD-MODEL-V7-REL-1 交付的引擎/精度记录；本步不重跑PRISM"
+
+experiments:
+  A_original_AQD:
+    source_semantics: V6_original_protocol_unchanged
+    actions:
+      - "复算公开哈希的同会话/跨会话确定性相等与字典恢复"
+      - "重跑 original_aqd_abort_terminal_v6.nm 及 no_timeout 模型并保存最短轨迹"
+    monte_carlo: false
+    reuse_rule: "历史原始文件须通过原交付校验且独立复算一致，方标 verified_reuse"
+
+  B_IMR:
+    history_candidate: true
+    historical_grid:
+      L: [8, 16, 24, 32, 64]
+      attacked_fraction: [0.10, 0.25, 0.50, 0.75, 1.00]
+      strategies: [random_replacement, random_basis_imr, fixed_z_imr, biased_basis_imr]
+      historical_trials_per_seed: 100000
+      historical_seed_count: 30
+    regression_grid:
+      L: [8, 16, 64]
+      attacked_fraction: [0.25, 1.00]
+      strategies: [random_replacement, random_basis_imr, fixed_z_imr, biased_basis_imr]
+      seeds: [2026090501, 2026090502, 2026090503, 2026090504, 2026090505]
+      trials_per_seed: 20000
+      event_batch_trials: 2000
+    acceptance: "逐粒子独立产生攻击选择、基和测量事件；不得直接按闭式漏检概率抽样终态"
+    reuse_rule: "源/配置/原始哈希、解析式重算及回归锚点均通过才引用历史全网格；否则标 pending_full_rerun"
+
+  B_EM:
+    history_candidate: true
+    theta_domain: "[0, pi/2]"
+    deterministic_grid_points: 101
+    qiskit_anchor_theta: ["0", "pi/8", "pi/4", "3pi/8", "pi/2"]
+    qiskit_shots_per_seed: 8192
+    qiskit_seeds: [2026090501, 2026090502, 2026090503, 2026090504, 2026090505]
+    reuse_rule: "完整101点密度矩阵重算和Qiskit锚点通过后才引用历史全网格；结论仅限指定等距探针族"
+
+  C_quantum_core:
+    cluster_states: [phi1, phi2]
+    message_pairs: 16
+    exact_circuits: 32
+    nonzero_bell_branches: 128
+    ideal_shots: 8192
+    ideal_seed: 2026090501
+    channel_names: [bit_flip, phase_flip, depolarizing, amplitude_damping, phase_damping]
+    channel_p: [0.00, 0.01, 0.02, 0.05, 0.10, 0.15, 0.20]
+    channel_scopes: [transmission_S3_S4_only, local_storage_S1_S2_S5_S6_only]
+    gate_profiles:
+      low: {single_qubit: 0.0005, two_qubit: 0.005, readout: 0.01}
+      medium: {single_qubit: 0.001, two_qubit: 0.01, readout: 0.02}
+      high: {single_qubit: 0.005, two_qubit: 0.03, readout: 0.05}
+    scope_note: "量子块/局部解码指标与完整协议接受率分表"
+
+  C_complete_noisy_protocol:
+    modes: [BASIC, RELEASE]
+    n_blocks: 4
+    message_bits_per_party: 8
+    release_lambda_bits: 3
+    release_last_chunk_bits: 2
+    ell_per_sequence: 32
+    decoy_trials: 64
+    qber_threshold_num: 11
+    qber_threshold_den: 100
+    transmission_channel: depolarizing
+    channel_p: [0.00, 0.02, 0.05, 0.10]
+    decoy_error_probability: "p/2 for the separately simulated random-basis decoy observations"
+    trials_per_seed: 500
+    seeds: all_manifest_seeds
+    composition: "Qiskit密度矩阵产生每块Bell结果；事件级诱骗误码进入V7 bob_detection；本地恢复结果在测试驱动的量子—经典接口处注入后走真实I8验证"
+    boundary: "参考组合实验，不代表硬件、一般相关噪声或QDist证明；V7生产量子适配器本身仍只接受通过代数检查的块"
+
+  D_authentication_and_ablation:
+    unit_suite: tests/test_protocol_v7.py
+    migrated_attack_catalog: tests/protocol_v7_scenarios.py
+    short_tag_candidates: 256
+    short_tag_bits: 8
+    ablation_policy: "逐项报告可执行弱化试验或仅规格映射；不把已删除/不适用选项伪装成运行失败"
+    records: "保存场景输入来源、完整事件日志、局部state_after、验证trace、拒绝原因和所有意外接受"
+
+  E_detection_DTMC:
+    L: [16, 32, 64, 128]
+    q0: [0.00, 0.01, 0.03, 0.05]
+    q1: 0.20
+    q_threshold: [0.05, 0.10, 0.15]
+    threshold_count: "floor(L*q_threshold)"
+    accept_rule: "errors <= threshold_count; executor-equivalent errors*den <= L*num"
+    trials_per_seed: 100000
+    seeds: all_manifest_seeds
+    event_batch_trials: 5000
+    prism_queries: "每配置对q0和q1各1次，共96次"
+
+  F_release_MDP:
+    action: verified_reuse_without_rerun
+    source_run_id: 20260905T200413_CST
+    source_manifest: reports/PRISM_ALIGNMENT_OUTPUTS.sha256
+    required_hash_matches: 217
+    normal_configurations: 52
+    negative_variants: 2
+    invalidation_rule: "协议、执行器接口、模型或性质哈希变化即失效并重跑；当前均未变化"
+
+  G_resources:
+    n_blocks: [1, 2, 4, 8, 16, 32]
+    ell_per_sequence: [4, 155]
+    release_lambda_bits: [1, 2, 4, 8]
+    include_lambda_only_if: "lambda <= 2*n"
+    schemes: [original_AQD, IAQD_BASIC_V7, IAQD_RELEASE_V7]
+    KE_QKD_communication: excluded_and_separately_labelled
+    initialization_records: separately_counted
+    quantum_transmission: separately_counted
+    wire_metric: "V7 post-KE CE1 records的实际字节和；原AQD无同一序列化实现时明确NA"
+    logical_metric: "协议字段级bit公式或实测字段值；公式、字段集合和不可比项逐行标明"
+    causal_rounds: "由消息依赖DAG最长路径计算，不用函数调用次数"
+    quantum_metric: "制备/传输/存储qubit、Bell测量次数、读出bit数分列"
+
+  G_performance:
+    configurations: "G_resources中的全部有效V7 BASIC/RELEASE组合"
+    warmup_runs_per_configuration: 5
+    measured_runs_per_configuration: 30
+    seeds_for_measured_inputs: "按manifest种子循环，不筛选"
+    timer: time.perf_counter_ns
+    process: single_process
+    statistics: [count, mean_ms, median_ms, sample_sd_ms, p05_ms, p25_ms, p75_ms, p95_ms, min_ms, max_ms]
+    classical_scope: "内存中V7会话：模拟KE派生、确定性量子fixture、记录生成/CE1序列化/本地验证、承诺与开放；不含外部KE/QKD、网络、Qiskit或PRISM"
+    quantum_scope: "Qiskit线路构造/状态或shots另表，不混入经典执行器计时"
+
+change_control:
+  rule: "任何manifest变更先复制旧manifest，新增变更记录、原因和受影响结果；不得根据已见结果改计划"
+  frozen_result_fields: "本文件不包含希望获得的数值、通过率或成功断言"

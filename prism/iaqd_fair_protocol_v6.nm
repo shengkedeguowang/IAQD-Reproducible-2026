@@ -1,0 +1,159 @@
+mdp
+
+// Finite IAQD fair-release protocol model. Security targets occur only in
+// labels/properties, never in transition guards or updates.
+const int n_blocks;
+const int lambda_bits;
+const int corrupted;       // 0=Alice, 1=Bob
+const int initial_leader;  // 0=Alice, 1=Bob, derived from sid by the executor
+
+formula message_length_bits = 2*n_blocks;
+formula number_of_chunks = floor((message_length_bits+lambda_bits-1)/lambda_bits);
+formula remaining_a = message_length_bits-verified_R_A_bits;
+formula remaining_b = message_length_bits-verified_R_B_bits;
+formula chunk_a = remaining_a<lambda_bits ? remaining_a : lambda_bits;
+formula chunk_b = remaining_b<lambda_bits ? remaining_b : lambda_bits;
+formula next_round_leader = mod(initial_leader+round_index+1,2);
+
+module fair_release
+    phase : [0..3] init 0; // 0=commit,1=open,2=complete,3=terminated failure
+    sid_match : bool init true;
+    direction : [0..2] init 0; // 1=A2B, 2=B2A
+    seq_a : [0..128] init 0;
+    seq_b : [0..128] init 0;
+    commitment_a_sent : bool init false;
+    commitment_b_sent : bool init false;
+    commitment_a_authenticated : bool init false;
+    commitment_b_authenticated : bool init false;
+    pending_opening : bool init false;
+    opening_block_index : [0..32] init 0;
+    opening_matches_commitment : bool init true;
+    verified_R_A_bits : [0..32] init 0;
+    verified_R_B_bits : [0..32] init 0;
+    L_A : [0..32] init 0;
+    L_B : [0..32] init 0;
+    termination_reason : [0..3] init 0; // 0=none,1=complete,2=abort,3=context reject
+    corrupt_party : [0..1] init corrupted;
+    turn : [0..1] init initial_leader;
+    round_index : [0..32] init 0;
+    half_round : [0..1] init 0;
+    current_allowed_action : [0..12] init 0;
+    last_record_authenticated : bool init false;
+
+    [commit_a] phase=0 & !commitment_a_sent ->
+        (commitment_a_sent'=true) & (commitment_a_authenticated'=true) &
+        (seq_a'=seq_a+1) & (direction'=1) & (last_record_authenticated'=true) &
+        (current_allowed_action'=1);
+    [commit_b] phase=0 & !commitment_b_sent ->
+        (commitment_b_sent'=true) & (commitment_b_authenticated'=true) &
+        (seq_b'=seq_b+1) & (direction'=2) & (last_record_authenticated'=true) &
+        (current_allowed_action'=1);
+    [begin_opening] phase=0 & commitment_a_sent & commitment_b_sent &
+        commitment_a_authenticated & commitment_b_authenticated ->
+        (phase'=1) & (turn'=initial_leader) & (current_allowed_action'=2);
+
+    // Alice's authenticated valid opening. Bob gains only the true verified R_A bits.
+    [honest_open_a] phase=1 & turn=0 & corrupted=1 & round_index<number_of_chunks ->
+        (verified_R_A_bits'=verified_R_A_bits+chunk_a) & (L_B'=L_B+chunk_a) &
+        (opening_block_index'=round_index) & (opening_matches_commitment'=true) &
+        (seq_a'=seq_a+1) & (direction'=1) & (last_record_authenticated'=true) &
+        (phase'=(half_round=1 & round_index=number_of_chunks-1 ? 2 : phase)) &
+        (termination_reason'=(half_round=1 & round_index=number_of_chunks-1 ? 1 : termination_reason)) &
+        (round_index'=(half_round=1 ? round_index+1 : round_index)) &
+        (half_round'=(half_round=1 ? 0 : 1)) &
+        (turn'=(half_round=0 ? 1 : next_round_leader)) & (current_allowed_action'=3);
+    [corrupt_valid_open_a] phase=1 & turn=0 & corrupted=0 & round_index<number_of_chunks ->
+        (verified_R_A_bits'=verified_R_A_bits+chunk_a) & (L_B'=L_B+chunk_a) &
+        (opening_block_index'=round_index) & (opening_matches_commitment'=true) &
+        (seq_a'=seq_a+1) & (direction'=1) & (last_record_authenticated'=true) &
+        (phase'=(half_round=1 & round_index=number_of_chunks-1 ? 2 : phase)) &
+        (termination_reason'=(half_round=1 & round_index=number_of_chunks-1 ? 1 : termination_reason)) &
+        (round_index'=(half_round=1 ? round_index+1 : round_index)) &
+        (half_round'=(half_round=1 ? 0 : 1)) &
+        (turn'=(half_round=0 ? 1 : next_round_leader)) & (current_allowed_action'=3);
+
+    // Bob's authenticated valid opening. Alice gains only the true verified R_B bits.
+    [honest_open_b] phase=1 & turn=1 & corrupted=0 & round_index<number_of_chunks ->
+        (verified_R_B_bits'=verified_R_B_bits+chunk_b) & (L_A'=L_A+chunk_b) &
+        (opening_block_index'=round_index) & (opening_matches_commitment'=true) &
+        (seq_b'=seq_b+1) & (direction'=2) & (last_record_authenticated'=true) &
+        (phase'=(half_round=1 & round_index=number_of_chunks-1 ? 2 : phase)) &
+        (termination_reason'=(half_round=1 & round_index=number_of_chunks-1 ? 1 : termination_reason)) &
+        (round_index'=(half_round=1 ? round_index+1 : round_index)) &
+        (half_round'=(half_round=1 ? 0 : 1)) &
+        (turn'=(half_round=0 ? 0 : next_round_leader)) & (current_allowed_action'=3);
+    [corrupt_valid_open_b] phase=1 & turn=1 & corrupted=1 & round_index<number_of_chunks ->
+        (verified_R_B_bits'=verified_R_B_bits+chunk_b) & (L_A'=L_A+chunk_b) &
+        (opening_block_index'=round_index) & (opening_matches_commitment'=true) &
+        (seq_b'=seq_b+1) & (direction'=2) & (last_record_authenticated'=true) &
+        (phase'=(half_round=1 & round_index=number_of_chunks-1 ? 2 : phase)) &
+        (termination_reason'=(half_round=1 & round_index=number_of_chunks-1 ? 1 : termination_reason)) &
+        (round_index'=(half_round=1 ? round_index+1 : round_index)) &
+        (half_round'=(half_round=1 ? 0 : 1)) &
+        (turn'=(half_round=0 ? 0 : next_round_leader)) & (current_allowed_action'=3);
+
+    // A corrupted party possesses its own MAC key. These records authenticate,
+    // then fail or terminate according to protocol context rather than MAC failure.
+    [delay_a] phase=1 & turn=0 & corrupted=0 ->
+        (current_allowed_action'=4) & (last_record_authenticated'=true);
+    [abort_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=2) & (current_allowed_action'=5) &
+        (last_record_authenticated'=true);
+    [selective_open_then_abort_a] phase=1 & turn=0 & corrupted=0 & round_index<number_of_chunks ->
+        (verified_R_A_bits'=verified_R_A_bits+chunk_a) & (L_B'=L_B+chunk_a) &
+        (opening_block_index'=round_index) & (seq_a'=seq_a+1) & (direction'=1) &
+        (phase'=3) & (termination_reason'=2) & (current_allowed_action'=6) &
+        (opening_matches_commitment'=true) & (last_record_authenticated'=true);
+    [replay_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (current_allowed_action'=7) &
+        (last_record_authenticated'=true);
+    [out_of_order_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (opening_block_index'=round_index+1) &
+        (current_allowed_action'=8) & (last_record_authenticated'=true);
+    [invalid_open_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (opening_matches_commitment'=false) &
+        (current_allowed_action'=9) & (last_record_authenticated'=true);
+    [mismatched_randomness_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (opening_matches_commitment'=false) &
+        (current_allowed_action'=10) & (last_record_authenticated'=true);
+    [duplicate_old_open_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (current_allowed_action'=11) &
+        (last_record_authenticated'=true);
+    [wrong_context_a] phase=1 & turn=0 & corrupted=0 ->
+        (phase'=3) & (termination_reason'=3) & (sid_match'=false) & (direction'=2) &
+        (current_allowed_action'=12) & (last_record_authenticated'=true);
+
+    [delay_b] phase=1 & turn=1 & corrupted=1 ->
+        (current_allowed_action'=4) & (last_record_authenticated'=true);
+    [abort_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=2) & (current_allowed_action'=5) &
+        (last_record_authenticated'=true);
+    [selective_open_then_abort_b] phase=1 & turn=1 & corrupted=1 & round_index<number_of_chunks ->
+        (verified_R_B_bits'=verified_R_B_bits+chunk_b) & (L_A'=L_A+chunk_b) &
+        (opening_block_index'=round_index) & (seq_b'=seq_b+1) & (direction'=2) &
+        (phase'=3) & (termination_reason'=2) & (current_allowed_action'=6) &
+        (opening_matches_commitment'=true) & (last_record_authenticated'=true);
+    [replay_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (current_allowed_action'=7) &
+        (last_record_authenticated'=true);
+    [out_of_order_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (opening_block_index'=round_index+1) &
+        (current_allowed_action'=8) & (last_record_authenticated'=true);
+    [invalid_open_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (opening_matches_commitment'=false) &
+        (current_allowed_action'=9) & (last_record_authenticated'=true);
+    [mismatched_randomness_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (opening_matches_commitment'=false) &
+        (current_allowed_action'=10) & (last_record_authenticated'=true);
+    [duplicate_old_open_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (current_allowed_action'=11) &
+        (last_record_authenticated'=true);
+    [wrong_context_b] phase=1 & turn=1 & corrupted=1 ->
+        (phase'=3) & (termination_reason'=3) & (sid_match'=false) & (direction'=1) &
+        (current_allowed_action'=12) & (last_record_authenticated'=true);
+endmodule
+
+label "terminated" = phase=2 | phase=3;
+label "fair_violation" = (L_A>L_B ? L_A-L_B : L_B-L_A)>lambda_bits;
+label "completed" = phase=2 & termination_reason=1;
+

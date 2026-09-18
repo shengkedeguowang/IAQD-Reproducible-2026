@@ -1,0 +1,167 @@
+{
+  "boundary_behaviors": {
+    "bob_detection_failure_alice_later_timeout": {
+      "alice": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "TIMEOUT_DIALOGUE_B_QPASS"
+      },
+      "bob": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "DETECTION_FAILED"
+      }
+    },
+    "mismatched_mask_not_message_fairness": {
+      "alice": {
+        "S": 6,
+        "V": 6,
+        "max_gap": 4,
+        "recovered_peer_message_present": true,
+        "terminal_reason": "authentication_tag_invalid"
+      },
+      "bob": {
+        "S": 6,
+        "V": 6,
+        "max_gap": 2,
+        "recovered_peer_message_present": true,
+        "terminal_reason": "COMPLETED"
+      }
+    },
+    "qrecv_missing_timeout": {
+      "alice": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "TIMEOUT_QRECV_ACK"
+      },
+      "bob": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": null
+      }
+    },
+    "release_stop_honest_alice_leader": {
+      "alice": {
+        "S": 4,
+        "V": 0,
+        "max_gap": 4,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "TIMEOUT_NEXT_OPEN"
+      },
+      "bob": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "PARTICIPANT_ABORT"
+      }
+    },
+    "release_stop_honest_bob_leader": {
+      "alice": {
+        "S": 0,
+        "V": 0,
+        "max_gap": 0,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "PARTICIPANT_ABORT"
+      },
+      "bob": {
+        "S": 4,
+        "V": 0,
+        "max_gap": 4,
+        "recovered_peer_message_present": false,
+        "terminal_reason": "TIMEOUT_NEXT_OPEN"
+      }
+    }
+  },
+  "event_rows": {
+    "attacks": 701,
+    "boundaries": 111,
+    "honest": 58
+  },
+  "executor_version": "IAQD-EXEC-V7",
+  "honest_basic": {
+    "metrics": {
+      "causal_layers_core_spec": 5,
+      "mac_record_count": 4,
+      "post_ke_record_count": 6,
+      "prf_confirm_count": 2,
+      "qtx_count": 1,
+      "r": 0,
+      "records_core_spec": 6
+    },
+    "success": true,
+    "terminal_state": "COMPLETED"
+  },
+  "honest_release": {
+    "alice_max_gap": 2,
+    "bob_max_gap": 4,
+    "metrics": {
+      "causal_layers_core_spec": 10,
+      "mac_record_count": 10,
+      "post_ke_record_count": 12,
+      "prf_confirm_count": 2,
+      "qtx_count": 1,
+      "r": 2,
+      "records_core_spec": 12
+    },
+    "success": true,
+    "terminal_state": "COMPLETED"
+  },
+  "legacy_ablation_mapping": {
+    "cases": 9,
+    "statuses": {
+      "no_K_dist_validation": "MAPPED_TO_REQUIRED_CHECK",
+      "no_direction": "MAPPED_TO_REQUIRED_CHECK",
+      "no_keyed_confirmation": "MAPPED_TO_REQUIRED_CHECK",
+      "no_mac": "NOT_APPLICABLE_AS_STATED",
+      "no_receipt_ack": "MAPPED_TO_SEND_GATE",
+      "no_sequence": "MAPPED_TO_REQUIRED_CHECK",
+      "no_sid": "MAPPED_TO_REQUIRED_CHECK",
+      "public_message_hash_confirmation": "ORIGINAL_AQD_ONLY",
+      "public_record_hash": "LEGACY_OPTION_REMOVED"
+    }
+  },
+  "legacy_attack_migration": {
+    "accepted": 0,
+    "cases": 42,
+    "regression_passes": 42
+  },
+  "scope": "bounded semantic/unit regression; no performance experiment and no cryptographic proof",
+  "short_tag": {
+    "accepted_count": 1,
+    "accepted_tags": [
+      "df"
+    ],
+    "actual_validator_calls_reaching_prf": 256,
+    "candidate_count": 256,
+    "method": "exhaustive fixed-context calls to protocol_v7.validate_record; not a preset probability",
+    "reason_counts": {
+      "accepted": 1,
+      "authentication_tag_invalid": 255
+    },
+    "tag_bits": 8
+  },
+  "spec_id": "IAQD-REL-CAND-1",
+  "unexecuted": [
+    "V6 pytest suite (pytest/Qiskit/NumPy dependencies unavailable in current bundled Python)",
+    "complete performance experiment",
+    "PRISM model checking",
+    "noise-grid and Monte Carlo experiments"
+  ],
+  "unittest": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "successful": true,
+    "tests_run": 24,
+    "text": "test_01_ce1_is_typed_injective_and_rejects_floats (test_protocol_v7.ProtocolV7Tests.test_01_ce1_is_typed_injective_and_rejects_floats) ... ok\ntest_02_honest_basic_completes_with_bob_first_and_one_auth_per_record (test_protocol_v7.ProtocolV7Tests.test_02_honest_basic_completes_with_bob_first_and_one_auth_per_record) ... ok\ntest_03_honest_release_nondivisible_last_block_completes (test_protocol_v7.ProtocolV7Tests.test_03_honest_release_nondivisible_last_block_completes) ... ok\ntest_04_lambda_one_and_full_length_boundaries_complete (test_protocol_v7.ProtocolV7Tests.test_04_lambda_one_and_full_length_boundaries_complete) ... ok\ntest_05_both_first_leaders_have_complete_honest_traces (test_protocol_v7.ProtocolV7Tests.test_05_both_first_leaders_have_complete_honest_traces) ... ok\ntest_06_local_states_are_independent_and_qber_never_appears_at_alice (test_protocol_v7.ProtocolV7Tests.test_06_local_states_are_independent_and_qber_never_appears_at_alice) ... ok\ntest_07_validator_has_only_record_and_local_state_inputs (test_protocol_v7.ProtocolV7Tests.test_07_validator_has_only_record_and_local_state_inputs) ... ok\ntest_08_tq_domain_has_no_numeric_qber_and_is_publicly_reconstructed (test_protocol_v7.ProtocolV7Tests.test_08_tq_domain_has_no_numeric_qber_and_is_publicly_reconstructed) ... ok\ntest_09_qrecv_missing_forged_and_replayed_are_local_failures (test_protocol_v7.ProtocolV7Tests.test_09_qrecv_missing_forged_and_replayed_are_local_failures) ... ok\ntest_10_decoy_cannot_be_sent_before_local_ack_acceptance (test_protocol_v7.ProtocolV7Tests.test_10_decoy_cannot_be_sent_before_local_ack_acceptance) ... ok\ntest_11_mode_downgrade_reflection_replay_order_and_lengths_are_covered (test_protocol_v7.ProtocolV7Tests.test_11_mode_downgrade_reflection_replay_order_and_lengths_are_covered) ... ok\ntest_12_early_and_duplicate_confirmation_are_rejected (test_protocol_v7.ProtocolV7Tests.test_12_early_and_duplicate_confirmation_are_rejected) ... ok\ntest_13_invalid_opening_never_increments_v_and_replay_never_double_counts (test_protocol_v7.ProtocolV7Tests.test_13_invalid_opening_never_increments_v_and_replay_never_double_counts) ... ok\ntest_14_each_honest_party_preserves_bound_when_either_side_leads_then_peer_stops (test_protocol_v7.ProtocolV7Tests.test_14_each_honest_party_preserves_bound_when_either_side_leads_then_peer_stops) ... ok\ntest_15_mismatched_mask_is_not_misclassified_as_release_invariant_failure (test_protocol_v7.ProtocolV7Tests.test_15_mismatched_mask_is_not_misclassified_as_release_invariant_failure) ... ok\ntest_16_detection_failure_is_not_teleported_to_alice (test_protocol_v7.ProtocolV7Tests.test_16_detection_failure_is_not_teleported_to_alice) ... ok\ntest_17_new_sessions_have_fresh_sid_key_handles_and_masks (test_protocol_v7.ProtocolV7Tests.test_17_new_sessions_have_fresh_sid_key_handles_and_masks) ... ok\ntest_18_all_42_legacy_attacks_are_migrated_to_actual_checks (test_protocol_v7.ProtocolV7Tests.test_18_all_42_legacy_attacks_are_migrated_to_actual_checks) ... ok\ntest_19_nine_legacy_ablations_are_mapped_without_forcing_failure (test_protocol_v7.ProtocolV7Tests.test_19_nine_legacy_ablations_are_mapped_without_forcing_failure) ... ok\ntest_20_short_tag_enumeration_calls_actual_prf_verifier (test_protocol_v7.ProtocolV7Tests.test_20_short_tag_enumeration_calls_actual_prf_verifier) ... ok\ntest_21_all_128_independent_bell_branches_recover_correctly (test_protocol_v7.ProtocolV7Tests.test_21_all_128_independent_bell_branches_recover_correctly) ... ok\ntest_22_event_log_has_local_before_after_evidence_without_secret_values (test_protocol_v7.ProtocolV7Tests.test_22_event_log_has_local_before_after_evidence_without_secret_values) ... ok\ntest_23_unknown_fields_and_wrong_lengths_do_not_partially_accept (test_protocol_v7.ProtocolV7Tests.test_23_unknown_fields_and_wrong_lengths_do_not_partially_accept) ... ok\ntest_24_record_headers_bind_reviewed_version_canon_mode_and_parameters (test_protocol_v7.ProtocolV7Tests.test_24_record_headers_bind_reviewed_version_canon_mode_and_parameters) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 0.981s\n\nOK\n"
+  }
+}

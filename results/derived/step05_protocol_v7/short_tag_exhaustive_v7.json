@@ -1,0 +1,14 @@
+{
+  "accepted_count": 1,
+  "accepted_tags": [
+    "df"
+  ],
+  "actual_validator_calls_reaching_prf": 256,
+  "candidate_count": 256,
+  "method": "exhaustive fixed-context calls to protocol_v7.validate_record; not a preset probability",
+  "reason_counts": {
+    "accepted": 1,
+    "authentication_tag_invalid": 255
+  },
+  "tag_bits": 8
+}

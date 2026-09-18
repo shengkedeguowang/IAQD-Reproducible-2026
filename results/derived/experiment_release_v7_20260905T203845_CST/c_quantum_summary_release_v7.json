@@ -1,0 +1,38 @@
+{
+  "complete_noisy_protocol": {
+    "aggregate_rows": 24,
+    "aggregate_sha256": "F4AF2E0C205BC87C8861694FF97EE1584850AC85B174A41DF003F02E4913A7F8",
+    "boundary": "The production V7 quantum adapter remains ideal-algebra checked; this driver explicitly composes Qiskit outcomes at the documented local-recovery seam.",
+    "failure_class_counts": {
+      "detection_reject": 125,
+      "i8_recovery_mismatch": 2340,
+      "invalid_local_decode": 5787,
+      "success": 31748
+    },
+    "failure_examples": 16,
+    "raw_sha256": "1E10398DB299F15A557B28F0E8603BE8731A0A804A672315AD6755A2C89F54F5",
+    "trial_rows": 40000
+  },
+  "quantum_core": {
+    "hashes": {
+      "branches": "D897A1C5A368837E469DE7EBC8E0916FC1C37B48C76DA66DC0DFDA6AE5E2EBE5",
+      "channels": "1A478E255B3728F06C68972BC739056BAB7C23D223ED5A627DF0CFF4EFF0F979",
+      "circuits": "6E69D119C7F46EF6A3CFB46F48A96C47C170D7DF54BB018C3FAE7964F1DB16C7",
+      "exact": "5F30299A75424A367B5A60B610A1CD7BF14D2ACB06352C0DF706E8E1E6FBE232",
+      "gate_noise": "2C3630E6F7EF23F395EFED3E470B68BF057A5057A3EB73F1FD258584068BEFF8",
+      "ideal_shots": "53332FA59DDB44D0E729601D0E0DC511757FD62583BDC682299A2B83E3740AF9"
+    },
+    "maximum_numerical_amplitude_error": 1.1113714042552588e-16,
+    "minimum_exact_bidirectional_decode": 0.9999999999999974,
+    "minimum_preparation_fidelity": 0.9999999999999978,
+    "row_counts": {
+      "branches": 128,
+      "channels": 2240,
+      "circuits": 2,
+      "exact": 32,
+      "gate_noise": 96,
+      "ideal_shots": 32
+    },
+    "successful_v7_branches": 128
+  }
+}

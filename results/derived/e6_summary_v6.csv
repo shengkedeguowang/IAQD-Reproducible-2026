@@ -1,0 +1,9 @@
+experiment,configuration,seed,metric,value,ci_low,ci_high,unit,status,raw_file_sha256,notes
+E6,dtmc_L32_q003_q1020_t010,,honest_false_abort_probability,0.014901331562792053,0.014785425446155687,0.015059816823694616,probability,complete,ead041cf3329e7dc195c197186445a577593b89800588501d2ea6e048ac7c01d,
+E6,dtmc_L32_q003_q1020_t010,,attack_miss_probability,0.09309309095426076,0.09286256884008451,0.09352047298526239,probability,complete,ead041cf3329e7dc195c197186445a577593b89800588501d2ea6e048ac7c01d,
+E6,dtmc_all_registered,,maximum_prism_analytic_error,8.881784197001252e-16,,,probability,complete,ead041cf3329e7dc195c197186445a577593b89800588501d2ea6e048ac7c01d,
+E6,dtmc_all_registered,,maximum_mc_analytic_error,0.0003221136995025242,,,probability,complete,ead041cf3329e7dc195c197186445a577593b89800588501d2ea6e048ac7c01d,Every trial materializes L independent error events.
+E6,fair_all_registered,,pmax_fairness_violation,0.0,,,probability,complete,ae7123f61d2611a73b95806166042f54d4f94366a26d84e3979ae42d85a9b410,Finite protocol MDP only; corrupt parties authenticate their own malicious records.
+E6,fair_all_registered,,maximum_information_lead,8,,,bits,complete,ae7123f61d2611a73b95806166042f54d4f94366a26d84e3979ae42d85a9b410,Computed solely from all PRISM-exported reachable states.
+E6,fair_all_registered,,model_configurations,48,,,configurations,complete,ae7123f61d2611a73b95806166042f54d4f94366a26d84e3979ae42d85a9b410,
+E6,fair_all_registered,,all_k_level_queries,944,,,queries,complete,3ed74416b19a64fdcf74589b6f3717747707c0ff4dce030231ea5e919311e019,Each finite MDP configuration queries every k from 0 through message_length_bits.

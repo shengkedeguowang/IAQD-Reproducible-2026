@@ -1,0 +1,59 @@
+{
+  "D_authentication": {
+    "ablation_catalog_rows": 9,
+    "ablation_supporting_required_checks_executed": 6,
+    "attack_cases": 42,
+    "attack_event_rows": 701,
+    "attack_regression_passes": 42,
+    "boundary": "finite semantic regression; ablation mappings are not nine selectable weakened protocol implementations",
+    "hashes": {
+      "ablations": "B49232410880FFA42E5AAAD0A589C4DC4C4A7D4847930825EE6B1D7A38B488B9",
+      "attacks": "1A423D159B327E987B786D9A89934D2039AA94EF40349C0DA782C215A12CB6B2",
+      "events": "FF0FBE0A6C0D2A76C49689EFC2242421861584521D3FA2D7D168AF27C924EE48",
+      "honest": "C2453A32F00DCEECABD7A6D9BBE97B4499545FE34BC2A3B3A48A436EF7596FAE",
+      "short_tag": "BEDBD0AC9AFB81876DEC3D380FEA34F90A3DA4B755254F735FF84CFA0CCD0F5D"
+    },
+    "honest_paths": 2,
+    "honest_successes": 2,
+    "pytest_exit_code": 0,
+    "pytest_log": "reports/logs/experiment_release_v7_20260905T203845_CST/d_pytest_v7_and_gamma.log",
+    "short_tag_accepted": 1,
+    "short_tag_candidates": 256,
+    "short_tag_reached_prf": 256,
+    "unexpected_accepts": 0,
+    "weakened_protocol_variants_executed": 0
+  },
+  "F_release_MDP": {
+    "audit_sha256": "F870A896F363D29B1E526FE676ABF8457C7AFA1B36A9211F153EB20B3C92DC30",
+    "claim_boundary": "finite model of local S_H/V_H events; not message-knowledge fairness or unbounded cryptographic security",
+    "manifest_matches": 217,
+    "manifest_mismatches": 0,
+    "manifest_missing": 0,
+    "negative_configurations": 2,
+    "negative_relaxed_violation_pmax": "1",
+    "normal_configurations": 52,
+    "normal_nonzero_violation_queries": 0,
+    "source_run_id": "20260905T200413_CST",
+    "source_summary": "results/derived/prism_release_v7/20260905T200413_CST/summary.json",
+    "status": "verified_reuse"
+  },
+  "G_resources_performance": {
+    "causal_schedule_rows": 1252,
+    "hashes": {
+      "performance_aggregate": "258574C13A8E468C9A834105FBB2C965D9E49A21F753BBE1107193817ECBE21A",
+      "performance_raw": "B833ABCCD406E6B03043ADA4F8DDB5BF03F4F20B43A0F170FD2043D8F33F3312",
+      "quantum": "0A6278989AC97BD0857A5B4F9D2C6EC5AF6D6AA0968E1D9BF895E45BFCC1D183",
+      "records": "C4812C7F1F3F443259217CA97F72AA9CACD6A0608C2A076E6DF6271DA941F225",
+      "resource": "64D66846E34F8A6BDD83E8529994DCCBBD9065B2EA6BC152122428F0F6392002",
+      "rounds": "DED973120A5453571E5045BCCABE5605A31E59DBD637C19453D1455EDAA07108"
+    },
+    "performance_failed_runs": 0,
+    "performance_measured_runs": 1620,
+    "performance_warmup_runs": 270,
+    "quantum_resource_rows": 36,
+    "resource_rows_including_original": 66,
+    "serialization_boundary": "Original AQD lacks the reviewed CE1 serializer, so its byte column is NA rather than an invented comparable number.",
+    "v7_configurations": 54,
+    "wire_record_rows": 1348
+  }
+}
